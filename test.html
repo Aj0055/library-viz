@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html><body>
+<h3>Map file check</h3>
+<pre id="out"></pre>
+<script>
+const out = s => document.getElementById('out').textContent += s + '\n';
+fetch('data/qld_lga.topojson')
+  .then(r => { out('status: ' + r.status); return r.json(); })
+  .then(t => {
+    out('objects: ' + Object.keys(t.objects));
+    const g = t.objects.qld_lga;
+    out('type: ' + g.type + ', shapes: ' + g.geometries.length);
+    out('empty shapes: ' + g.geometries.filter(x => !x.type).length);
+    out('first shape: ' + JSON.stringify(g.geometries[0]).slice(0, 220));
+    out('arcs: ' + t.arcs.length + ', has transform: ' + !!t.transform);
+  })
+  .catch(e => out('ERROR: ' + e.message));
+</script>
+</body></html>
