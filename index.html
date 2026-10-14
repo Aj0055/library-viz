@@ -11,11 +11,11 @@
   <h1>Step 2: Queensland libraries</h1>
   <div id="vis">If you can read this, the map did not load.</div>
   <script>
-    const spec = {
+      const spec = {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
       "width": 700,
       "height": 520,
-      "title": "Queensland public libraries",
+      "title": "Loans per resident, 2024-25",
       "projection": {"type": "conicEqualArea", "parallels": [-12, -28], "rotate": [-145, 0]},
       "layer": [
         {
@@ -26,11 +26,41 @@
           "mark": {"type": "geoshape", "fill": "lightgray", "stroke": "white"}
         },
         {
-          "data": {"url": "data/libraries.csv"},
-          "mark": {"type": "circle", "size": 30, "opacity": 0.8, "color": "#2f5d62", "tooltip": {"content": "data"}},
+          "data": {
+            "url": "data/qld_lga.topojson",
+            "format": {"type": "topojson", "feature": "qld_lga"}
+          },
+          "transform": [
+            {
+              "lookup": "properties.lga_code_2021",
+              "from": {
+                "data": {
+                  "url": "data/library_stats.csv",
+                  "format": {"type": "csv", "parse": {"lga_code_2021": "string"}}
+                },
+                "key": "lga_code_2021",
+                "fields": ["name", "usage_pc", "members_pct"]
+              }
+            },
+            {"filter": "isValid(datum.usage_pc)"}
+          ],
+          "mark": {"type": "geoshape", "stroke": "white"},
           "encoding": {
-            "longitude": {"field": "lon", "type": "quantitative"},
-            "latitude": {"field": "lat", "type": "quantitative"}
+            "color": {
+              "field": "usage_pc",
+              "type": "quantitative",
+              "title": "Loans per resident",
+              "scale": {
+                "type": "threshold",
+                "domain": [2, 4, 6, 8],
+                "range": ["#e3efee", "#b7d6d4", "#7fb3b2", "#46888b", "#1f5559"]
+              }
+            },
+            "tooltip": [
+              {"field": "name", "type": "nominal", "title": "Council"},
+              {"field": "usage_pc", "type": "quantitative", "title": "Loans per resident"},
+              {"field": "members_pct", "type": "quantitative", "title": "Members % of population"}
+            ]
           }
         }
       ]
