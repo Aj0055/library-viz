@@ -15,19 +15,55 @@
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
       "width": 700,
       "height": 520,
-      "title": "Test: map file only",
-      "projection": {"type": "mercator"},
-      "data": {
-        "url": "data/qld_lga.topojson",
-        "format": {"type": "topojson", "feature": "qld_lga"}
-      },
-      "mark": {"type": "geoshape", "fill": "lightgray", "stroke": "#555", "strokeWidth": 0.5},
-      "encoding": {
-        "tooltip": [
-          {"field": "properties.lga_code_2021", "type": "nominal", "title": "Code"},
-          {"field": "properties.lga_name_2021", "type": "nominal", "title": "Name"}
-        ]
-      }
+      "title": "Loans per resident, 2024-25",
+      "projection": {"type": "conicEqualArea", "parallels": [-12, -28], "rotate": [-145, 0]},
+      "layer": [
+        {
+          "data": {
+            "url": "data/qld_lga.topojson",
+            "format": {"type": "topojson", "feature": "qld_lga"}
+          },
+          "mark": {"type": "geoshape", "fill": "lightgray", "stroke": "white"}
+        },
+        {
+          "data": {
+            "url": "data/qld_lga.topojson",
+            "format": {"type": "topojson", "feature": "qld_lga"}
+          },
+          "transform": [
+            {
+              "lookup": "properties.code",
+              "from": {
+                "data": {
+                  "url": "data/library_stats.csv",
+                  "format": {"type": "csv", "parse": {"lga_code_2021": "string"}}
+                },
+                "key": "lga_code_2021",
+                "fields": ["name", "usage_pc", "members_pct"]
+              }
+            },
+            {"filter": "isValid(datum.usage_pc)"}
+          ],
+          "mark": {"type": "geoshape", "stroke": "white"},
+          "encoding": {
+            "color": {
+              "field": "usage_pc",
+              "type": "quantitative",
+              "title": "Loans per resident",
+              "scale": {
+                "type": "threshold",
+                "domain": [2, 4, 6, 8],
+                "range": ["#e3efee", "#b7d6d4", "#7fb3b2", "#46888b", "#1f5559"]
+              }
+            },
+            "tooltip": [
+              {"field": "name", "type": "nominal", "title": "Council"},
+              {"field": "usage_pc", "type": "quantitative", "title": "Loans per resident"},
+              {"field": "members_pct", "type": "quantitative", "title": "Members % of population"}
+            ]
+          }
+        }
+      ]
     };
              
     vegaEmbed("#vis", spec, {actions: false}).catch(err => {
