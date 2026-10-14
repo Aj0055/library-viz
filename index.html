@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Step 1: lab test map</title>
+  <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+</head>
+<body>
+  <h1>Step 1: lab test map</h1>
+  <div id="vis">If you can read this, the map did not load.</div>
+  <script>
+    const spec = {
+      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+      "width": 800,
+      "height": 450,
+      "title": "Earthquakes of magnitude 4 or larger, 4-10 Oct 2020",
+      "projection": {"type": "equalEarth"},
+      "layer": [
+        {
+          "data": {
+            "url": "https://raw.githubusercontent.com/FIT3179/Vega-Lite/main/2_symbol_map/js/ne_110m_admin_0_countries.topojson",
+            "format": {"type": "topojson", "feature": "ne_110m_admin_0_countries"}
+          },
+          "mark": {"type": "geoshape", "fill": "lightgray", "stroke": "white"}
+        },
+        {
+          "data": {
+            "url": "https://raw.githubusercontent.com/FIT3179/Vega-Lite/main/2_symbol_map/data/earthquake.csv"
+          },
+          "mark": {"type": "circle", "tooltip": {"content": "data"}},
+          "encoding": {
+            "longitude": {"field": "longitude", "type": "quantitative"},
+            "latitude": {"field": "latitude", "type": "quantitative"},
+            "size": {"field": "mag", "type": "quantitative", "title": "Magnitude (Richter scale)", "scale": {"domain": [4, 8]}},
+            "color": {"field": "depth", "type": "quantitative", "title": "Depth in km", "scale": {"scheme": "reds"}}
+          }
+        }
+      ]
+    };
+    vegaEmbed("#vis", spec, {actions: false}).catch(err => {
+      document.getElementById("vis").textContent = "Error: " + err.message;
+    });
+  </script>
+</body>
+</html>
