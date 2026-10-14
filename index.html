@@ -11,6 +11,12 @@
   <h1>Step 2: Queensland libraries</h1>
   <div id="vis">If you can read this, the map did not load.</div>
   <div id="vis2">If you can read this, the second map did not load.</div>
+  <div id="vis4">Bivariate map did not load.</div>
+  <p>Bottom left: low borrowing, more disadvantaged. Bottom right: high borrowing, more disadvantaged. Top left: low borrowing, more advantaged. Top right: high borrowing, more advantaged.</p>
+  <div id="vis5">Line chart did not load.</div>
+  <div id="vis6">Jitter plot did not load.</div>
+  <div id="vis7">Lollipop chart did not load.</div>
+  <div id="vis8">Butterfly chart did not load.</div>
 
   <script>
     const spec = {
@@ -136,6 +142,104 @@
     vegaEmbed("#vis2", spec2, {actions: false}).catch(err => {
       document.getElementById("vis2").textContent = "Error: " + err.message;
     });
+
+  const show = (id, s) => vegaEmbed('#' + id, s, {actions: false})
+  .catch(e => document.getElementById(id).textContent = 'Error: ' + e.message);
+const P = {"type": "conicEqualArea", "parallels": [-12, -28], "rotate": [-145, 0]};
+const TOPO = {"url": "data/qld_lga.topojson", "format": {"type": "topojson", "feature": "qld_lga"}};
+const cols = {"00":"#e8e8e8","10":"#ace4e4","20":"#5ac8c8","01":"#dfb0d6","11":"#a5add3","21":"#5698b9","02":"#be64ac","12":"#8c62aa","22":"#3b4994"};
+
+// Map 3: bivariate choropleth
+show('vis4', {
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 700, "height": 520, "projection": P,
+  "title": "Library use and disadvantage together",
+  "layer": [
+    {"data": TOPO, "mark": {"type": "geoshape", "fill": "lightgray", "stroke": "white"}},
+    {"data": TOPO,
+     "transform": [
+       {"lookup": "properties.code", "from": {
+         "data": {"url": "data/library_stats.csv", "format": {"type": "csv", "parse": {"lga_code_2021": "string", "bi": "string"}}},
+         "key": "lga_code_2021", "fields": ["name", "usage_pc", "irsd_decile", "bi"]}},
+       {"filter": "isValid(datum.bi)"}],
+     "mark": {"type": "geoshape", "stroke": "white"},
+     "encoding": {
+       "color": {"field": "bi", "type": "nominal", "legend": null,
+                 "scale": {"domain": Object.keys(cols), "range": Object.values(cols)}},
+       "tooltip": [{"field": "name", "title": "Council"},
+                   {"field": "usage_pc", "type": "quantitative", "title": "Loans per resident"},
+                   {"field": "irsd_decile", "type": "quantitative", "title": "Disadvantage decile (1 = most disadvantaged)"}]}}
+  ]});
+
+// Line chart (basic idiom)
+show('vis5', {
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 600, "height": 320,
+  "title": "Australia: five years of library use, per person",
+  "data": {"url": "data/national_per_person.csv"},
+  "mark": {"type": "line", "point": true, "strokeWidth": 2.5},
+  "encoding": {
+    "x": {"field": "year", "type": "ordinal", "title": null, "axis": {"labelAngle": 0}},
+    "y": {"field": "per_person", "type": "quantitative", "title": "Per person, per year"},
+    "color": {"field": "measure", "type": "nominal", "title": null},
+    "tooltip": [{"field": "measure"}, {"field": "year"}, {"field": "per_person", "title": "Per person"}]}});
+
+// Jitter plot
+show('vis6', {
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 650, "height": 220,
+  "title": "Loans per resident, council by council",
+  "data": {"url": "data/library_stats.csv"},
+  "transform": [
+    {"filter": "isValid(datum.usage_pc)"},
+    {"calculate": "datum.svc == 'IND' ? 'Larger councils (independent)' : 'Smaller rural councils'", "as": "group"},
+    {"calculate": "random()", "as": "jitter"}],
+  "mark": {"type": "circle", "size": 70, "opacity": 0.7},
+  "encoding": {
+    "x": {"field": "usage_pc", "type": "quantitative", "title": "Items borrowed per resident, 2024-25"},
+    "y": {"field": "group", "type": "nominal", "title": null},
+    "yOffset": {"field": "jitter", "type": "quantitative"},
+    "color": {"field": "group", "type": "nominal", "legend": null, "scale": {"range": ["#2f5d62", "#c08a3e"]}},
+    "tooltip": [{"field": "name", "title": "Council"}, {"field": "usage_pc", "title": "Loans per resident"}]}});
+
+// Lollipop chart
+show('vis7', {
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 560, "height": 360,
+  "title": "Top 15 borrowing councils (10,000+ residents)",
+  "data": {"url": "data/library_stats.csv"},
+  "transform": [
+    {"filter": "isValid(datum.usage_pc) && datum.pop >= 10000"},
+    {"window": [{"op": "rank", "as": "rank"}], "sort": [{"field": "usage_pc", "order": "descending"}]},
+    {"filter": "datum.rank <= 15"}],
+  "encoding": {
+    "y": {"field": "name", "type": "nominal", "sort": "-x", "title": null},
+    "x": {"field": "usage_pc", "type": "quantitative", "title": "Items borrowed per resident"}},
+  "layer": [
+    {"mark": {"type": "rule", "color": "#7fb3b2", "strokeWidth": 2}, "encoding": {"x2": {"datum": 0}}},
+    {"mark": {"type": "circle", "size": 120, "color": "#1f5559"},
+     "encoding": {"tooltip": [{"field": "name", "title": "Council"}, {"field": "usage_pc", "title": "Loans per resident"}]}}]});
+
+// Butterfly chart
+const ages = ["Early childhood", "Children", "Young adult", "Adults", "Seniors", "All ages"];
+show('vis8', {
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Who programs are for, and who turns up (Australia, 2023-24)",
+  "data": {"url": "data/program_age.csv"},
+  "transform": [
+    {"joinaggregate": [{"op": "sum", "field": "sessions", "as": "ts"}, {"op": "sum", "field": "participants", "as": "tp"}]},
+    {"calculate": "datum.sessions / datum.ts", "as": "s_share"},
+    {"calculate": "datum.participants / datum.tp", "as": "p_share"}],
+  "hconcat": [
+    {"width": 260, "height": 240, "mark": {"type": "bar", "color": "#8b4a6b"},
+     "encoding": {
+       "y": {"field": "age", "type": "ordinal", "sort": ages, "axis": null},
+       "x": {"field": "s_share", "type": "quantitative", "scale": {"reverse": true, "domain": [0, 0.55]}, "axis": {"format": "%"}, "title": "Share of sessions"}}},
+    {"width": 260, "height": 240, "mark": {"type": "bar", "color": "#2f5d62"},
+     "encoding": {
+       "y": {"field": "age", "type": "ordinal", "sort": ages, "title": null, "axis": {"orient": "left", "labelPadding": 8}},
+       "x": {"field": "p_share", "type": "quantitative", "scale": {"domain": [0, 0.55]}, "axis": {"format": "%"}, "title": "Share of people attending"}}}
+  ]});
   </script>
 </body>
 </html>
