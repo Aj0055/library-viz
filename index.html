@@ -1,71 +1,176 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-AU">
 <head>
   <meta charset="utf-8">
-  <title>Step 2: Queensland libraries</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Queensland's libraries: where they are and who they reach</title>
   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
   <style>
-  .vega-embed { display: block !important; margin: 30px 0; }
-</style>
+    body {
+      margin: 0;
+      background: #f7f8f5;
+      color: #1f2a2c;
+      font: 18px/1.65 Georgia, serif;
+    }
+    main {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 20px 60px;
+    }
+    h1 {
+      font-size: 2.6rem;
+      line-height: 1.1;
+      margin: 60px 0 16px;
+    }
+    h2 {
+      font-size: 1.6rem;
+      margin: 56px 0 8px;
+      padding-top: 24px;
+      border-top: 1px solid #d5dad3;
+    }
+    .lede {
+      font-size: 1.25rem;
+      color: #5b6660;
+    }
+    .note {
+      font: 14px/1.5 Arial, sans-serif;
+      color: #5b6660;
+      margin: 4px 0 0;
+    }
+    .chart {
+      margin: 24px 0 4px;
+      overflow-x: auto;
+    }
+    .vega-embed {
+      display: block !important;
+    }
+    .err {
+      color: #b00020;
+      font: 14px Arial, sans-serif;
+    }
+    footer {
+      font: 14px/1.6 Arial, sans-serif;
+      color: #5b6660;
+      border-top: 1px solid #d5dad3;
+      margin-top: 56px;
+      padding-top: 20px;
+    }
+  </style>
 </head>
 <body>
-  <h1>Step 2: Queensland libraries</h1>
-  <div id="vis">If you can read this, the map did not load.</div>
-  <div id="vis2">If you can read this, the second map did not load.</div>
-  <div id="vis3">Slope chart did not load.</div>
-  <div id="vis4">Bivariate map did not load.</div>
+  <main>
+    <h1>Queensland's libraries: where they are and who they reach</h1>
+    <p class="lede">More than 300 libraries serve Queensland, from Brisbane's city branches to small outback branches. Do people use them equally everywhere?</p>
 
-  <div style="display:flex;gap:14px;align-items:center;font:14px sans-serif;margin:10px 0">
-    <div>More advantaged<br><br><br><br><br><br>More disadvantaged</div>
-    <div>
-      <div style="display:grid;grid-template-columns:repeat(3,40px);gap:2px">
-        <i style="display:block;height:40px;background:#be64ac"></i><i style="display:block;height:40px;background:#8c62aa"></i><i style="display:block;height:40px;background:#3b4994"></i>
-        <i style="display:block;height:40px;background:#dfb0d6"></i><i style="display:block;height:40px;background:#a5add3"></i><i style="display:block;height:40px;background:#5698b9"></i>
-        <i style="display:block;height:40px;background:#e8e8e8"></i><i style="display:block;height:40px;background:#ace4e4"></i><i style="display:block;height:40px;background:#5ac8c8"></i>
+    <h2>Borrowing is far from even</h2>
+    <p>In 2024-25 the average Queenslander borrowed 7.7 items from their council library. Gold Coast residents borrowed 12.3 each, while some remote councils borrowed fewer than one. Grey councils have no published figures.</p>
+    <div class="chart" id="vis">Loading map...</div>
+    <p class="note">Source: Queensland Public Libraries Statistical Bulletin 2024-25, State Library of Queensland. Loans include physical and digital items.</p>
+
+    <h2>Busy doors, big and small</h2>
+    <p>Visits tell a different story from loans. Brisbane recorded 5.4 million visits and the Gold Coast 2 million, but libraries are also places to use computers, meet people and get help. Circles sit at the centre of each council.</p>
+    <div class="chart" id="vis2">Loading map...</div>
+    <p class="note">Source: Queensland Public Libraries Statistical Bulletin 2024-25. Physical visits only.</p>
+
+    <h2>Does disadvantage change who borrows?</h2>
+    <p>Colour shows two things at once: how much residents borrow (left to right) and how advantaged the area is (bottom to top), using the ABS SEIFA index. A council in the bottom row is in the most disadvantaged 30% of Australian council areas.</p>
+    <div style="display:flex;gap:14px;align-items:center;font:14px Arial,sans-serif;margin:10px 0">
+      <div style="text-align:right">
+        More<br>advantaged<br><br><br><br><br>More<br>disadvantaged
       </div>
-      <div style="display:flex;justify-content:space-between;gap:20px;margin-top:4px;white-space:nowrap"><span>Low borrowing</span><span>High borrowing</span></div>
+      <div>
+        <div style="display:grid;grid-template-columns:repeat(3,40px);gap:2px">
+          <i style="display:block;height:40px;background:#be64ac"></i>
+          <i style="display:block;height:40px;background:#8c62aa"></i>
+          <i style="display:block;height:40px;background:#3b4994"></i>
+          <i style="display:block;height:40px;background:#dfb0d6"></i>
+          <i style="display:block;height:40px;background:#a5add3"></i>
+          <i style="display:block;height:40px;background:#5698b9"></i>
+          <i style="display:block;height:40px;background:#e8e8e8"></i>
+          <i style="display:block;height:40px;background:#ace4e4"></i>
+          <i style="display:block;height:40px;background:#5ac8c8"></i>
+        </div>
+        <div style="display:flex;justify-content:space-between;gap:20px;margin-top:4px;white-space:nowrap">
+          <span>Low borrowing</span>
+          <span>High borrowing</span>
+        </div>
+      </div>
     </div>
-  </div>
+    <div class="chart" id="vis4">Loading map...</div>
+    <p class="note">Sources: State Library of Queensland (2024-25); ABS SEIFA 2021, Index of Relative Socio-economic Disadvantage. SEIFA describes areas, not individual residents.</p>
 
-  <div id="vis5">Line chart did not load.</div>
-  <div id="vis6">Jitter plot did not load.</div>
-  <div id="vis7">Lollipop chart did not load.</div>
-  <div id="vis8">Butterfly chart did not load.</div>
+    <h2>Who borrows the most?</h2>
+    <p>The highest-borrowing councils are mostly in the south-east. Smaller rural councils are spread widely, and some borrow as much as city councils.</p>
+    <div class="chart" id="vis7">Loading chart...</div>
+    <div class="chart" id="vis6">Loading chart...</div>
+
+    <h2>What libraries offer</h2>
+    <p>Early childhood programs are about 31% of all sessions but draw about 51% of everyone who attends, so storytimes and rhyme sessions reach the most people.</p>
+    <div class="chart" id="vis8">Loading chart...</div>
+    <p class="note">Source: Australian Public Libraries Statistical Report 2023-24 (ALIA and NSLA), national figures.</p>
+
+    <h2>Back to the library, after COVID</h2>
+    <p>Across Australia, in-person visits fell during the pandemic and have recovered to about 3.2 per person. Borrowing has grown from 5.5 to 6.5 items per person, while website visits have dropped.</p>
+    <div class="chart" id="vis5">Loading chart...</div>
+    <div class="chart" id="vis3">Loading chart...</div>
+    <p class="note">Source: Australian Public Libraries Statistical Report 2023-24 (ALIA and NSLA).</p>
+
+    <footer>
+      <p><strong>Author:</strong> [Your name], FIT3179 Data Visualisation 2, Monash University. [Date].</p>
+      <p><strong>Data:</strong> State Library of Queensland, <em>Queensland Public Libraries Statistical Bulletin 2024-25</em>; ALIA and NSLA, <em>Australian Public Libraries Statistical Report 2023-24</em>; Australian Bureau of Statistics, SEIFA 2021 and ASGS Edition 3 boundaries.</p>
+      <p><strong>AI use:</strong> Claude (Anthropic) helped write the chart code and page text.</p>
+    </footer>
+  </main>
 
   <script>
-    const spec = {
-      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    const S = "https://vega.github.io/schema/vega-lite/v5.json";
+    const show = (id, s) => vegaEmbed('#' + id, s, {actions: false}).catch(e => {
+      const el = document.getElementById(id);
+      el.className = 'chart err';
+      el.textContent = 'Error in ' + id + ': ' + e.message;
+    });
+
+    const P = {"type": "conicEqualArea", "parallels": [-12, -28], "rotate": [-145, 0]};
+    const TOPO = {"url": "data/qld_lga.topojson", "format": {"type": "topojson", "feature": "qld_lga"}};
+    
+    const STATS = (fields, parse) => ({
+      "lookup": "properties.code",
+      "from": {
+        "data": {
+          "url": "data/library_stats.csv",
+          "format": {"type": "csv", "parse": Object.assign({"lga_code_2021": "string"}, parse || {})}
+        },
+        "key": "lga_code_2021",
+        "fields": fields
+      }
+    });
+
+    const BASE = (fill) => ({
+      "data": TOPO,
+      "mark": {"type": "geoshape", "fill": fill, "stroke": "#999", "strokeWidth": 0.4}
+    });
+
+    const cols = {
+      "00": "#e8e8e8", "10": "#ace4e4", "20": "#5ac8c8",
+      "01": "#dfb0d6", "11": "#a5add3", "21": "#5698b9",
+      "02": "#be64ac", "12": "#8c62aa", "22": "#3b4994"
+    };
+
+    // Map 1: choropleth
+    show('vis', {
+      "$schema": S,
       "width": 700,
       "height": 520,
+      "projection": P,
       "title": "Loans per resident, 2024-25",
-      "projection": {"type": "conicEqualArea", "parallels": [-12, -28], "rotate": [-145, 0]},
       "layer": [
+        BASE("#ffffff"),
         {
-          "data": {
-            "url": "data/qld_lga.topojson",
-            "format": {"type": "topojson", "feature": "qld_lga"}
-          },
-          "mark": {"type": "geoshape", "fill": "lightgray", "stroke": "white"}
-        },
-        {
-          "data": {
-            "url": "data/qld_lga.topojson",
-            "format": {"type": "topojson", "feature": "qld_lga"}
-          },
+          "data": TOPO,
           "transform": [
-            {
-              "lookup": "properties.code",
-              "from": {
-                "data": {
-                  "url": "data/library_stats.csv",
-                  "format": {"type": "csv", "parse": {"lga_code_2021": "string"}}
-                },
-                "key": "lga_code_2021",
-                "fields": ["name", "usage_pc", "members_pct"]
-              }
-            },
+            STATS(["name", "usage_pc", "members_pct"]),
             {"filter": "isValid(datum.usage_pc)"}
           ],
           "mark": {"type": "geoshape", "stroke": "white"},
@@ -81,52 +186,28 @@
               }
             },
             "tooltip": [
-              {"field": "name", "type": "nominal", "title": "Council"},
+              {"field": "name", "title": "Council"},
               {"field": "usage_pc", "type": "quantitative", "title": "Loans per resident"},
               {"field": "members_pct", "type": "quantitative", "title": "Members % of population"}
             ]
           }
         }
       ]
-    };
-
-    vegaEmbed("#vis", spec, {actions: false}).catch(err => {
-      document.getElementById("vis").textContent = "Error: " + err.message;
     });
 
-    const spec2 = {
-      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    // Map 2: proportional symbols
+    show('vis2', {
+      "$schema": S,
       "width": 700,
       "height": 520,
+      "projection": P,
       "title": "Physical library visits, 2024-25",
-      "projection": {"type": "conicEqualArea", "parallels": [-12, -28], "rotate": [-145, 0]},
       "layer": [
-        // Layer 1: Background Base Map
+        BASE("#e0e0e0"),
         {
-          "data": {
-            "url": "data/qld_lga.topojson",
-            "format": {"type": "topojson", "feature": "qld_lga"}
-          },
-          "mark": {"type": "geoshape", "fill": "#e0e0e0", "stroke": "white", "strokeWidth": 0.5}
-        },
-        // Layer 2: Proportional Circle Symbols on Centroids
-        {
-          "data": {
-            "url": "data/qld_lga.topojson",
-            "format": {"type": "topojson", "feature": "qld_lga"}
-          },
+          "data": TOPO,
           "transform": [
-            {
-              "lookup": "properties.code",
-              "from": {
-                "data": {
-                  "url": "data/library_stats.csv",
-                  "format": {"type": "csv", "parse": {"lga_code_2021": "string"}}
-                },
-                "key": "lga_code_2021",
-                "fields": ["name", "visits"]
-              }
-            },
+            STATS(["name", "visits"]),
             {"filter": "isValid(datum.visits) && datum.visits > 0"},
             {"calculate": "geoCentroid(null, datum)", "as": "centroid"}
           ],
@@ -143,59 +224,31 @@
             "size": {
               "field": "visits",
               "type": "quantitative",
-              "title": "Total Annual Visits",
+              "title": "Total annual visits",
               "scale": {"type": "sqrt", "range": [10, 800]}
             },
             "tooltip": [
-              {"field": "name", "type": "nominal", "title": "Council"},
+              {"field": "name", "title": "Council"},
               {"field": "visits", "type": "quantitative", "title": "Visits", "format": ","}
             ]
           }
         }
       ]
-    };
-
-    vegaEmbed("#vis2", spec2, {actions: false}).catch(err => {
-      document.getElementById("vis2").textContent = "Error: " + err.message;
     });
 
-    const show = (id, s) => vegaEmbed('#' + id, s, {actions: false})
-      .catch(e => document.getElementById(id).textContent = 'Error: ' + e.message);
-
-    const P = {"type": "conicEqualArea", "parallels": [-12, -28], "rotate": [-145, 0]};
-    const TOPO = {"url": "data/qld_lga.topojson", "format": {"type": "topojson", "feature": "qld_lga"}};
-    const cols = {
-      "00": "#e8e8e8", "10": "#ace4e4", "20": "#5ac8c8",
-      "01": "#dfb0d6", "11": "#a5add3", "21": "#5698b9",
-      "02": "#be64ac", "12": "#8c62aa", "22": "#3b4994"
-    };
-
-    // Map 3: Bivariate choropleth
+    // Map 3: bivariate choropleth
     show('vis4', {
-      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+      "$schema": S,
       "width": 700,
       "height": 520,
       "projection": P,
       "title": "Library use and disadvantage together",
       "layer": [
-        {
-          "data": TOPO,
-          "mark": {"type": "geoshape", "fill": "lightgray", "stroke": "white"}
-        },
+        BASE("#ffffff"),
         {
           "data": TOPO,
           "transform": [
-            {
-              "lookup": "properties.code",
-              "from": {
-                "data": {
-                  "url": "data/library_stats.csv",
-                  "format": {"type": "csv", "parse": {"lga_code_2021": "string", "bi": "string"}}
-                },
-                "key": "lga_code_2021",
-                "fields": ["name", "usage_pc", "irsd_decile", "bi"]
-              }
-            },
+            STATS(["name", "usage_pc", "irsd_decile", "bi"], {"bi": "string"}),
             {"filter": "isValid(datum.bi)"}
           ],
           "mark": {"type": "geoshape", "stroke": "white"},
@@ -216,25 +269,34 @@
       ]
     });
 
-    // Line chart (basic idiom)
-    show('vis5', {
-      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-      "width": 600,
-      "height": 320,
-      "title": "Australia: five years of library use, per person",
-      "data": {"url": "data/national_per_person.csv"},
-      "mark": {"type": "line", "point": true, "strokeWidth": 2.5},
+    // Lollipop
+    show('vis7', {
+      "$schema": S,
+      "width": 560,
+      "height": 360,
+      "title": "Top 15 borrowing councils (larger councils)",
+      "data": {"url": "data/library_stats.csv"},
+      "transform": [
+        {"filter": "isValid(datum.usage_pc) && datum.svc == 'IND'"},
+        {"window": [{"op": "rank", "as": "rank"}], "sort": [{"field": "usage_pc", "order": "descending"}]},
+        {"filter": "datum.rank <= 15"}
+      ],
       "encoding": {
-        "x": {"field": "year", "type": "ordinal", "title": null, "axis": {"labelAngle": 0}},
-        "y": {"field": "per_person", "type": "quantitative", "title": "Per person, per year"},
-        "color": {"field": "measure", "type": "nominal", "title": null},
-        "tooltip": [{"field": "measure"}, {"field": "year"}, {"field": "per_person", "title": "Per person"}]
-      }
+        "y": {"field": "name", "type": "nominal", "sort": "-x", "title": null},
+        "x": {"field": "usage_pc", "type": "quantitative", "title": "Items borrowed per resident"}
+      },
+      "layer": [
+        {"mark": {"type": "rule", "color": "#7fb3b2", "strokeWidth": 2}, "encoding": {"x2": {"datum": 0}}},
+        {
+          "mark": {"type": "circle", "size": 120, "color": "#1f5559"},
+          "encoding": {"tooltip": [{"field": "name", "title": "Council"}, {"field": "usage_pc", "title": "Loans per resident"}]}
+        }
+      ]
     });
 
-    // Jitter plot
+    // Jitter
     show('vis6', {
-      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+      "$schema": S,
       "width": 650,
       "height": 220,
       "title": "Loans per resident, council by council",
@@ -254,35 +316,10 @@
       }
     });
 
-    // Lollipop chart
-    show('vis7', {
-      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-      "width": 560,
-      "height": 360,
-      "title": "Top 15 borrowing councils (10,000+ residents)",
-      "data": {"url": "data/library_stats.csv"},
-      "transform": [
-        {"filter": "isValid(datum.usage_pc) && datum.pop >= 10000"},
-        {"window": [{"op": "rank", "as": "rank"}], "sort": [{"field": "usage_pc", "order": "descending"}]},
-        {"filter": "datum.rank <= 15"}
-      ],
-      "encoding": {
-        "y": {"field": "name", "type": "nominal", "sort": "-x", "title": null},
-        "x": {"field": "usage_pc", "type": "quantitative", "title": "Items borrowed per resident"}
-      },
-      "layer": [
-        {"mark": {"type": "rule", "color": "#7fb3b2", "strokeWidth": 2}, "encoding": {"x2": {"datum": 0}}},
-        {
-          "mark": {"type": "circle", "size": 120, "color": "#1f5559"},
-          "encoding": {"tooltip": [{"field": "name", "title": "Council"}, {"field": "usage_pc", "title": "Loans per resident"}]}
-        }
-      ]
-    });
-
-    // Butterfly chart
+    // Butterfly
     const ages = ["Early childhood", "Children", "Young adult", "Adults", "Seniors", "All ages"];
     show('vis8', {
-      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+      "$schema": S,
       "title": "Who programs are for, and who turns up (Australia, 2023-24)",
       "data": {"url": "data/program_age.csv"},
       "transform": [
@@ -312,9 +349,25 @@
       ]
     });
 
+    // Line chart
+    show('vis5', {
+      "$schema": S,
+      "width": 600,
+      "height": 320,
+      "title": "Australia: five years of library use, per person",
+      "data": {"url": "data/national_per_person.csv"},
+      "mark": {"type": "line", "point": true, "strokeWidth": 2.5},
+      "encoding": {
+        "x": {"field": "year", "type": "ordinal", "title": null, "axis": {"labelAngle": 0}},
+        "y": {"field": "per_person", "type": "quantitative", "title": "Per person, per year"},
+        "color": {"field": "measure", "type": "nominal", "title": null},
+        "tooltip": [{"field": "measure"}, {"field": "year"}, {"field": "per_person", "title": "Per person"}]
+      }
+    });
+
     // Slope chart
     show('vis3', {
-      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+      "$schema": S,
       "width": 360,
       "height": 420,
       "title": "Australia, per person: before COVID vs now",
