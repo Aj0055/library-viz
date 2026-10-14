@@ -79,7 +79,7 @@
       "title": "Physical library visits, 2024-25",
       "projection": {"type": "conicEqualArea", "parallels": [-12, -28], "rotate": [-145, 0]},
       "layer": [
-        // Layer 1: Background LGA Polygons
+        // Layer 1: Background Base Map
         {
           "data": {
             "url": "data/qld_lga.topojson",
@@ -87,7 +87,7 @@
           },
           "mark": {"type": "geoshape", "fill": "#e0e0e0", "stroke": "white", "strokeWidth": 0.5}
         },
-        // Layer 2: Proportional Circle Symbols
+        // Layer 2: Proportional Circle Symbols on Centroids
         {
           "data": {
             "url": "data/qld_lga.topojson",
@@ -105,7 +105,8 @@
                 "fields": ["name", "visits"]
               }
             },
-            {"filter": "isValid(datum.visits) && datum.visits > 0"}
+            {"filter": "isValid(datum.visits) && datum.visits > 0"},
+            {"calculate": "geoCentroid(null, datum)", "as": "centroid"}
           ],
           "mark": {
             "type": "circle",
@@ -115,8 +116,8 @@
             "strokeWidth": 0.5
           },
           "encoding": {
-            "longitude": {"field": "geometry", "type": "geojson"},
-            "latitude": {"field": "geometry", "type": "geojson"},
+            "longitude": {"field": "centroid[0]", "type": "quantitative"},
+            "latitude": {"field": "centroid[1]", "type": "quantitative"},
             "size": {
               "field": "visits",
               "type": "quantitative",
