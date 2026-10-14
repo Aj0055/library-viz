@@ -79,7 +79,7 @@
       "title": "Physical library visits, 2024-25",
       "projection": {"type": "conicEqualArea", "parallels": [-12, -28], "rotate": [-145, 0]},
       "layer": [
-        // Layer 1: Background Base Map
+        // Layer 1: Background LGA Polygons
         {
           "data": {
             "url": "data/qld_lga.topojson",
@@ -87,7 +87,7 @@
           },
           "mark": {"type": "geoshape", "fill": "#e0e0e0", "stroke": "white", "strokeWidth": 0.5}
         },
-        // Layer 2: Proportional Symbol Map (Centroids)
+        // Layer 2: Proportional Circle Symbols
         {
           "data": {
             "url": "data/qld_lga.topojson",
@@ -108,15 +108,20 @@
             {"filter": "isValid(datum.visits) && datum.visits > 0"}
           ],
           "mark": {
-            "type": "geoshape",
-            "point": {"color": "#1f5559", "fill": "#46888b", "opacity": 0.7, "strokeWidth": 1}
+            "type": "circle",
+            "color": "#1f5559",
+            "opacity": 0.6,
+            "stroke": "#0d2b2d",
+            "strokeWidth": 0.5
           },
           "encoding": {
+            "longitude": {"field": "geometry", "type": "geojson"},
+            "latitude": {"field": "geometry", "type": "geojson"},
             "size": {
               "field": "visits",
               "type": "quantitative",
               "title": "Total Annual Visits",
-              "scale": {"type": "sqrt", "range": [20, 1500]}
+              "scale": {"type": "sqrt", "range": [10, 800]}
             },
             "tooltip": [
               {"field": "name", "type": "nominal", "title": "Council"},
