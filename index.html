@@ -3,57 +3,116 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Australian libraries: where they are and who they reach</title>
+  <title>Queensland's libraries: where they are and who they reach</title>
   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
   <style>
+    :root {
+      --ink: #1f2a2c;
+      --muted: #5b6660;
+      --line: #d5dad3;
+      --bg: #f7f8f5;
+    }
+
     body {
       margin: 0;
-      background: #f7f8f5;
-      color: #1f2a2c;
+      background: var(--bg);
+      color: var(--ink);
       font: 18px/1.65 Georgia, serif;
     }
+
     main {
-      max-width: 760px;
+      max-width: 800px;
       margin: 0 auto;
       padding: 0 20px 60px;
     }
+
     h1 {
       font-size: 2.6rem;
       line-height: 1.1;
       margin: 60px 0 16px;
     }
+
     h2 {
       font-size: 1.6rem;
-      margin: 56px 0 8px;
+      line-height: 1.25;
+      margin: 56px 0 12px;
       padding-top: 24px;
-      border-top: 1px solid #d5dad3;
+      border-top: 1px solid var(--line);
     }
+
+    p {
+      margin: 0 0 16px;
+    }
+
     .lede {
       font-size: 1.25rem;
-      color: #5b6660;
+      color: var(--muted);
     }
+
     .note {
       font: 14px/1.5 Arial, sans-serif;
-      color: #5b6660;
-      margin: 4px 0 0;
+      color: var(--muted);
+      margin: 8px 0 0;
     }
+
     .chart {
-      margin: 24px 0 4px;
-      overflow-x: auto;
+      width: 100%;
+      margin: 24px 0 0;
     }
-    .vega-embed {
-      display: block !important;
+
+    .chart.narrow {
+      max-width: 520px;
     }
+
+    .vega-embed,
+    .vega-embed details {
+      width: 100%;
+    }
+
     .err {
       color: #b00020;
       font: 14px Arial, sans-serif;
     }
+
+    .key {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      font: 14px Arial, sans-serif;
+      margin: 8px 0 0;
+    }
+
+    .key .rows {
+      text-align: right;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 126px;
+    }
+
+    .key .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 40px);
+      gap: 2px;
+    }
+
+    .key .grid i {
+      display: block;
+      height: 40px;
+    }
+
+    .key .cols {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 4px;
+    }
+
     footer {
       font: 14px/1.6 Arial, sans-serif;
-      color: #5b6660;
-      border-top: 1px solid #d5dad3;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
       margin-top: 56px;
       padding-top: 20px;
     }
@@ -65,7 +124,7 @@
     <p class="lede">More than 300 libraries serve Queensland, from Brisbane's city branches to small outback branches. Do people use them equally everywhere?</p>
 
     <h2>Borrowing is far from even</h2>
-    <p>In 2024-25 the average Queenslander borrowed 7.7 items from their council library. Gold Coast residents borrowed 12.3 each, while some remote councils borrowed fewer than one. Grey councils have no published figures.</p>
+    <p>In 2024-25 the average Queenslander borrowed 7.7 items from their council library. Gold Coast residents borrowed 12.3 each, while some remote councils borrowed fewer than one. Councils with no published figures are left white.</p>
     <div class="chart" id="vis">Loading map...</div>
     <p class="note">Source: Queensland Public Libraries Statistical Bulletin 2024-25, State Library of Queensland. Loans include physical and digital items.</p>
 
@@ -76,23 +135,14 @@
 
     <h2>Does disadvantage change who borrows?</h2>
     <p>Colour shows two things at once: how much residents borrow (left to right) and how advantaged the area is (bottom to top), using the ABS SEIFA index. A council in the bottom row is in the most disadvantaged 30% of Australian council areas.</p>
-    <div style="display:flex;gap:14px;align-items:center;font:14px Arial,sans-serif;margin:10px 0">
-      <div style="text-align:right">
-        More<br>advantaged<br><br><br><br><br>More<br>disadvantaged
+    <div class="key">
+      <div class="rows">
+        <span>More advantaged</span>
+        <span>More disadvantaged</span>
       </div>
       <div>
-        <div style="display:grid;grid-template-columns:repeat(3,40px);gap:2px">
-          <i style="display:block;height:40px;background:#be64ac"></i>
-          <i style="display:block;height:40px;background:#8c62aa"></i>
-          <i style="display:block;height:40px;background:#3b4994"></i>
-          <i style="display:block;height:40px;background:#dfb0d6"></i>
-          <i style="display:block;height:40px;background:#a5add3"></i>
-          <i style="display:block;height:40px;background:#5698b9"></i>
-          <i style="display:block;height:40px;background:#e8e8e8"></i>
-          <i style="display:block;height:40px;background:#ace4e4"></i>
-          <i style="display:block;height:40px;background:#5ac8c8"></i>
-        </div>
-        <div style="display:flex;justify-content:space-between;gap:20px;margin-top:4px;white-space:nowrap">
+        <div class="grid" id="keygrid"></div>
+        <div class="cols">
           <span>Low borrowing</span>
           <span>High borrowing</span>
         </div>
@@ -105,6 +155,7 @@
     <p>The highest-borrowing councils are mostly in the south-east. Smaller rural councils are spread widely, and some borrow as much as city councils.</p>
     <div class="chart" id="vis7">Loading chart...</div>
     <div class="chart" id="vis6">Loading chart...</div>
+    <p class="note">Source: Queensland Public Libraries Statistical Bulletin 2024-25.</p>
 
     <h2>What libraries offer</h2>
     <p>Early childhood programs are about 31% of all sessions but draw about 51% of everyone who attends, so storytimes and rhyme sessions reach the most people.</p>
@@ -114,11 +165,11 @@
     <h2>Back to the library, after COVID</h2>
     <p>Across Australia, in-person visits fell during the pandemic and have recovered to about 3.2 per person. Borrowing has grown from 5.5 to 6.5 items per person, while website visits have dropped.</p>
     <div class="chart" id="vis5">Loading chart...</div>
-    <div class="chart" id="vis3">Loading chart...</div>
+    <div class="chart narrow" id="vis3">Loading chart...</div>
     <p class="note">Source: Australian Public Libraries Statistical Report 2023-24 (ALIA and NSLA).</p>
 
     <footer>
-      <p><strong>Author:</strong> Ajay Bellamkonda, FIT3179 Data Visualisation 2, Monash University. 14/10/2025.</p>
+      <p><strong>Author:</strong> Ajay Bellamkonda, FIT3179 Data Visualisation 2, Monash University. 15/10/2026.</p>
       <p><strong>Data:</strong> State Library of Queensland, <em>Queensland Public Libraries Statistical Bulletin 2024-25</em>; ALIA and NSLA, <em>Australian Public Libraries Statistical Report 2023-24</em>; Australian Bureau of Statistics, SEIFA 2021 and ASGS Edition 3 boundaries.</p>
       <p><strong>AI use:</strong> Claude (Anthropic) helped write the chart code and page text.</p>
     </footer>
@@ -126,54 +177,135 @@
 
   <script>
     const S = "https://vega.github.io/schema/vega-lite/v5.json";
-    const show = (id, s) => vegaEmbed('#' + id, s, {actions: false}).catch(e => {
+
+    // One teal-and-slate palette used by every chart
+    const C = {
+      dark: "#1f5559",
+      mid: "#46888b",
+      light: "#b7d6d4",
+      pale: "#e3efee",
+      slate: "#6c7ba3",
+      navy: "#1f3a5f",
+      grey: "#e4e7e2",
+      line: "#ffffff"
+    };
+
+    const CONFIG = {
+      font: "Arial",
+      background: null,
+      view: { stroke: null },
+      title: {
+        anchor: "start",
+        font: "Georgia",
+        fontSize: 17,
+        fontWeight: "normal",
+        color: "#1f2a2c",
+        subtitleFont: "Arial"
+      },
+      axis: {
+        labelColor: "#444",
+        titleColor: "#444",
+        gridColor: "#e4e7e2",
+        domainColor: "#999",
+        tickColor: "#999"
+      },
+      legend: {
+        labelColor: "#444",
+        titleColor: "#444"
+      }
+    };
+
+    const show = (id, s) => vegaEmbed('#' + id, s, { actions: false, config: CONFIG }).catch(e => {
       const el = document.getElementById(id);
       el.className = 'chart err';
       el.textContent = 'Error in ' + id + ': ' + e.message;
     });
 
-    const P = {"type": "conicEqualArea", "parallels": [-12, -28], "rotate": [-145, 0]};
-    const TOPO = {"url": "data/qld_lga.topojson", "format": {"type": "topojson", "feature": "qld_lga"}};
-    
+    const FIT = {
+      "width": "container",
+      "autosize": {
+        "type": "fit-x",
+        "contains": "padding"
+      }
+    };
+
+    const P = {
+      "type": "conicEqualArea",
+      "parallels": [-12, -28],
+      "rotate": [-145, 0]
+    };
+
+    const TOPO = {
+      "url": "data/qld_lga.topojson",
+      "format": {
+        "type": "topojson",
+        "feature": "qld_lga"
+      }
+    };
+
     const STATS = (fields, parse) => ({
       "lookup": "properties.code",
       "from": {
         "data": {
           "url": "data/library_stats.csv",
-          "format": {"type": "csv", "parse": Object.assign({"lga_code_2021": "string"}, parse || {})}
+          "format": {
+            "type": "csv",
+            "parse": Object.assign({ "lga_code_2021": "string" }, parse || {})
+          }
         },
         "key": "lga_code_2021",
         "fields": fields
       }
     });
 
-    const BASE = (fill) => ({
+    const BASE = {
       "data": TOPO,
-      "mark": {"type": "geoshape", "fill": fill, "stroke": "#999", "strokeWidth": 0.4}
-    });
-
-    const cols = {
-      "00": "#e8e8e8", "10": "#ace4e4", "20": "#5ac8c8",
-      "01": "#dfb0d6", "11": "#a5add3", "21": "#5698b9",
-      "02": "#be64ac", "12": "#8c62aa", "22": "#3b4994"
+      "mark": {
+        "type": "geoshape",
+        "fill": "#ffffff",
+        "stroke": "#b5bbb5",
+        "strokeWidth": 0.4
+      }
     };
 
+    const MEAS = {
+      "domain": [
+        "Items borrowed",
+        "Library visits (in person)",
+        "Website visits",
+        "Items in collection"
+      ],
+      "range": [C.dark, C.mid, C.slate, C.navy]
+    };
+
+    // Bivariate palette: first digit = borrowing (teal), second digit = advantage (slate-blue)
+    const cols = {
+      "00": "#e8eaed", "10": "#a9d6d4", "20": "#46888b",
+      "01": "#b4bdd3", "11": "#7fa3b0", "21": "#3a7280",
+      "02": "#6c7ba3", "12": "#46648f", "22": "#1f3a5f"
+    };
+
+    document.getElementById('keygrid').innerHTML = [
+      "02", "12", "22",
+      "01", "11", "21",
+      "00", "10", "20"
+    ].map(k => `<i style="background:${cols[k]}"></i>`).join('');
+
     // Map 1: choropleth
-    show('vis', {
+    show('vis', Object.assign({
       "$schema": S,
-      "width": 700,
-      "height": 520,
+      "height": 540,
       "projection": P,
       "title": "Loans per resident, 2024-25",
       "layer": [
-        BASE("#ffffff"),
+        BASE,
         {
           "data": TOPO,
           "transform": [
             STATS(["name", "usage_pc", "members_pct"]),
-            {"filter": "isValid(datum.usage_pc)"}
+            { "filter": "isValid(datum.usage_pc)" }
           ],
-          "mark": {"type": "geoshape", "stroke": "white"},
+          "mark": { "type": "geoshape", "stroke": "white" },
           "encoding": {
             "color": {
               "field": "usage_pc",
@@ -182,216 +314,247 @@
               "scale": {
                 "type": "threshold",
                 "domain": [2, 4, 6, 8],
-                "range": ["#e3efee", "#b7d6d4", "#7fb3b2", "#46888b", "#1f5559"]
-              }
+                "range": [C.pale, C.light, "#7fb3b2", C.mid, C.dark]
+              },
+              "legend": { "orient": "bottom", "direction": "horizontal" }
             },
             "tooltip": [
-              {"field": "name", "title": "Council"},
-              {"field": "usage_pc", "type": "quantitative", "title": "Loans per resident"},
-              {"field": "members_pct", "type": "quantitative", "title": "Members % of population"}
+              { "field": "name", "title": "Council" },
+              { "field": "usage_pc", "type": "quantitative", "title": "Loans per resident" },
+              { "field": "members_pct", "type": "quantitative", "title": "Members % of population" }
             ]
           }
         }
       ]
-    });
+    }, FIT));
 
     // Map 2: proportional symbols
-    show('vis2', {
+    show('vis2', Object.assign({
       "$schema": S,
-      "width": 700,
-      "height": 520,
+      "height": 540,
       "projection": P,
       "title": "Physical library visits, 2024-25",
       "layer": [
-        BASE("#e0e0e0"),
+        Object.assign({}, BASE, { "mark": { "type": "geoshape", "fill": C.grey, "stroke": "white", "strokeWidth": 0.5 } }),
         {
           "data": TOPO,
           "transform": [
             STATS(["name", "visits"]),
-            {"filter": "isValid(datum.visits) && datum.visits > 0"},
-            {"calculate": "geoCentroid(null, datum)", "as": "centroid"}
+            { "filter": "isValid(datum.visits) && datum.visits > 0" },
+            { "calculate": "geoCentroid(null, datum)", "as": "centroid" }
           ],
           "mark": {
             "type": "circle",
-            "color": "#1f5559",
+            "color": C.dark,
             "opacity": 0.6,
             "stroke": "#0d2b2d",
             "strokeWidth": 0.5
           },
           "encoding": {
-            "longitude": {"field": "centroid[0]", "type": "quantitative"},
-            "latitude": {"field": "centroid[1]", "type": "quantitative"},
+            "longitude": { "field": "centroid[0]", "type": "quantitative" },
+            "latitude": { "field": "centroid[1]", "type": "quantitative" },
             "size": {
               "field": "visits",
               "type": "quantitative",
               "title": "Total annual visits",
-              "scale": {"type": "sqrt", "range": [10, 800]}
+              "scale": { "type": "sqrt", "range": [10, 800] },
+              "legend": { "orient": "bottom", "direction": "horizontal" }
             },
             "tooltip": [
-              {"field": "name", "title": "Council"},
-              {"field": "visits", "type": "quantitative", "title": "Visits", "format": ","}
+              { "field": "name", "title": "Council" },
+              { "field": "visits", "type": "quantitative", "title": "Visits", "format": "," }
             ]
           }
         }
       ]
-    });
+    }, FIT));
 
-    // Map 3: bivariate choropleth
-    show('vis4', {
+    // Map 3: bivariate
+    show('vis4', Object.assign({
       "$schema": S,
-      "width": 700,
-      "height": 520,
+      "height": 540,
       "projection": P,
       "title": "Library use and disadvantage together",
       "layer": [
-        BASE("#ffffff"),
+        BASE,
         {
           "data": TOPO,
           "transform": [
-            STATS(["name", "usage_pc", "irsd_decile", "bi"], {"bi": "string"}),
-            {"filter": "isValid(datum.bi)"}
+            STATS(["name", "usage_pc", "irsd_decile", "bi"], { "bi": "string" }),
+            { "filter": "isValid(datum.bi)" }
           ],
-          "mark": {"type": "geoshape", "stroke": "white"},
+          "mark": { "type": "geoshape", "stroke": "white" },
           "encoding": {
             "color": {
               "field": "bi",
               "type": "nominal",
               "legend": null,
-              "scale": {"domain": Object.keys(cols), "range": Object.values(cols)}
+              "scale": { "domain": Object.keys(cols), "range": Object.values(cols) }
             },
             "tooltip": [
-              {"field": "name", "title": "Council"},
-              {"field": "usage_pc", "type": "quantitative", "title": "Loans per resident"},
-              {"field": "irsd_decile", "type": "quantitative", "title": "Disadvantage decile (1 = most disadvantaged)"}
+              { "field": "name", "title": "Council" },
+              { "field": "usage_pc", "type": "quantitative", "title": "Loans per resident" },
+              { "field": "irsd_decile", "type": "quantitative", "title": "Disadvantage decile (1 = most disadvantaged)" }
             ]
           }
         }
       ]
-    });
+    }, FIT));
 
     // Lollipop
-    show('vis7', {
+    show('vis7', Object.assign({
       "$schema": S,
-      "width": 560,
       "height": 360,
       "title": "Top 15 borrowing councils (larger councils)",
-      "data": {"url": "data/library_stats.csv"},
+      "data": { "url": "data/library_stats.csv" },
       "transform": [
-        {"filter": "isValid(datum.usage_pc) && datum.svc == 'IND'"},
-        {"window": [{"op": "rank", "as": "rank"}], "sort": [{"field": "usage_pc", "order": "descending"}]},
-        {"filter": "datum.rank <= 15"}
+        { "filter": "isValid(datum.usage_pc) && datum.svc == 'IND'" },
+        { "window": [{ "op": "rank", "as": "rank" }], "sort": [{ "field": "usage_pc", "order": "descending" }] },
+        { "filter": "datum.rank <= 15" }
       ],
       "encoding": {
-        "y": {"field": "name", "type": "nominal", "sort": "-x", "title": null},
-        "x": {"field": "usage_pc", "type": "quantitative", "title": "Items borrowed per resident"}
+        "y": { "field": "name", "type": "nominal", "sort": "-x", "title": null },
+        "x": { "field": "usage_pc", "type": "quantitative", "title": "Items borrowed per resident" }
       },
       "layer": [
-        {"mark": {"type": "rule", "color": "#7fb3b2", "strokeWidth": 2}, "encoding": {"x2": {"datum": 0}}},
+        { "mark": { "type": "rule", "color": C.light, "strokeWidth": 2 }, "encoding": { "x2": { "datum": 0 } } },
         {
-          "mark": {"type": "circle", "size": 120, "color": "#1f5559"},
-          "encoding": {"tooltip": [{"field": "name", "title": "Council"}, {"field": "usage_pc", "title": "Loans per resident"}]}
+          "mark": { "type": "circle", "size": 120, "color": C.dark },
+          "encoding": { "tooltip": [{ "field": "name", "title": "Council" }, { "field": "usage_pc", "title": "Loans per resident" }] }
         }
       ]
-    });
+    }, FIT));
 
     // Jitter
-    show('vis6', {
+    show('vis6', Object.assign({
       "$schema": S,
-      "width": 650,
       "height": 220,
       "title": "Loans per resident, council by council",
-      "data": {"url": "data/library_stats.csv"},
+      "data": { "url": "data/library_stats.csv" },
       "transform": [
-        {"filter": "isValid(datum.usage_pc)"},
-        {"calculate": "datum.svc == 'IND' ? 'Larger councils (independent)' : 'Smaller rural councils'", "as": "group"},
-        {"calculate": "random()", "as": "jitter"}
+        { "filter": "isValid(datum.usage_pc)" },
+        { "calculate": "datum.svc == 'IND' ? 'Larger councils (independent)' : 'Smaller rural councils'", "as": "group" },
+        { "calculate": "random()", "as": "jitter" }
       ],
-      "mark": {"type": "circle", "size": 70, "opacity": 0.7},
+      "mark": { "type": "circle", "size": 70, "opacity": 0.75 },
       "encoding": {
-        "x": {"field": "usage_pc", "type": "quantitative", "title": "Items borrowed per resident, 2024-25"},
-        "y": {"field": "group", "type": "nominal", "title": null},
-        "yOffset": {"field": "jitter", "type": "quantitative"},
-        "color": {"field": "group", "type": "nominal", "legend": null, "scale": {"range": ["#2f5d62", "#c08a3e"]}},
-        "tooltip": [{"field": "name", "title": "Council"}, {"field": "usage_pc", "title": "Loans per resident"}]
+        "x": { "field": "usage_pc", "type": "quantitative", "title": "Items borrowed per resident, 2024-25" },
+        "y": { "field": "group", "type": "nominal", "title": null },
+        "yOffset": { "field": "jitter", "type": "quantitative" },
+        "color": {
+          "field": "group",
+          "type": "nominal",
+          "legend": null,
+          "scale": { "range": [C.dark, C.slate] }
+        },
+        "tooltip": [{ "field": "name", "title": "Council" }, { "field": "usage_pc", "title": "Loans per resident" }]
       }
-    });
+    }, FIT));
 
-    // Butterfly
+    // Butterfly (concat charts cannot use container width, so fixed widths sized to fit the page)
     const ages = ["Early childhood", "Children", "Young adult", "Adults", "Seniors", "All ages"];
     show('vis8', {
       "$schema": S,
       "title": "Who programs are for, and who turns up (Australia, 2023-24)",
-      "data": {"url": "data/program_age.csv"},
+      "data": { "url": "data/program_age.csv" },
       "transform": [
-        {"joinaggregate": [{"op": "sum", "field": "sessions", "as": "ts"}, {"op": "sum", "field": "participants", "as": "tp"}]},
-        {"calculate": "datum.sessions / datum.ts", "as": "s_share"},
-        {"calculate": "datum.participants / datum.tp", "as": "p_share"}
+        { "joinaggregate": [{ "op": "sum", "field": "sessions", "as": "ts" }, { "op": "sum", "field": "participants", "as": "tp" }] },
+        { "calculate": "datum.sessions / datum.ts", "as": "s_share" },
+        { "calculate": "datum.participants / datum.tp", "as": "p_share" }
       ],
       "hconcat": [
         {
           "width": 260,
           "height": 240,
-          "mark": {"type": "bar", "color": "#8b4a6b"},
+          "mark": { "type": "bar", "color": C.slate },
           "encoding": {
-            "y": {"field": "age", "type": "ordinal", "sort": ages, "axis": null},
-            "x": {"field": "s_share", "type": "quantitative", "scale": {"reverse": true, "domain": [0, 0.55]}, "axis": {"format": "%"}, "title": "Share of sessions"}
+            "y": { "field": "age", "type": "ordinal", "sort": ages, "axis": null },
+            "x": {
+              "field": "s_share",
+              "type": "quantitative",
+              "scale": { "reverse": true, "domain": [0, 0.55] },
+              "axis": { "format": "%" },
+              "title": "Share of sessions"
+            }
           }
         },
         {
           "width": 260,
           "height": 240,
-          "mark": {"type": "bar", "color": "#2f5d62"},
+          "mark": { "type": "bar", "color": C.dark },
           "encoding": {
-            "y": {"field": "age", "type": "ordinal", "sort": ages, "title": null, "axis": {"orient": "left", "labelPadding": 8}},
-            "x": {"field": "p_share", "type": "quantitative", "scale": {"domain": [0, 0.55]}, "axis": {"format": "%"}, "title": "Share of people attending"}
+            "y": {
+              "field": "age",
+              "type": "ordinal",
+              "sort": ages,
+              "title": null,
+              "axis": { "orient": "left", "labelPadding": 8 }
+            },
+            "x": {
+              "field": "p_share",
+              "type": "quantitative",
+              "scale": { "domain": [0, 0.55] },
+              "axis": { "format": "%" },
+              "title": "Share of people attending"
+            }
           }
         }
       ]
     });
 
     // Line chart
-    show('vis5', {
+    show('vis5', Object.assign({
       "$schema": S,
-      "width": 600,
       "height": 320,
       "title": "Australia: five years of library use, per person",
-      "data": {"url": "data/national_per_person.csv"},
-      "mark": {"type": "line", "point": true, "strokeWidth": 2.5},
+      "data": { "url": "data/national_per_person.csv" },
+      "mark": { "type": "line", "point": true, "strokeWidth": 2.5 },
       "encoding": {
-        "x": {"field": "year", "type": "ordinal", "title": null, "axis": {"labelAngle": 0}},
-        "y": {"field": "per_person", "type": "quantitative", "title": "Per person, per year"},
-        "color": {"field": "measure", "type": "nominal", "title": null},
-        "tooltip": [{"field": "measure"}, {"field": "year"}, {"field": "per_person", "title": "Per person"}]
+        "x": { "field": "year", "type": "ordinal", "title": null, "axis": { "labelAngle": 0 } },
+        "y": { "field": "per_person", "type": "quantitative", "title": "Per person, per year" },
+        "color": {
+          "field": "measure",
+          "type": "nominal",
+          "title": null,
+          "scale": MEAS,
+          "legend": { "orient": "bottom" }
+        },
+        "tooltip": [{ "field": "measure" }, { "field": "year" }, { "field": "per_person", "title": "Per person" }]
       }
-    });
+    }, FIT));
 
     // Slope chart
-    show('vis3', {
+    show('vis3', Object.assign({
       "$schema": S,
-      "width": 360,
       "height": 420,
       "title": "Australia, per person: before COVID vs now",
-      "data": {"url": "data/national_per_person.csv"},
-      "transform": [{"filter": "datum.year == '2019-20' || datum.year == '2023-24'"}],
+      "data": { "url": "data/national_per_person.csv" },
+      "transform": [{ "filter": "datum.year == '2019-20' || datum.year == '2023-24'" }],
       "encoding": {
-        "x": {"field": "year", "type": "ordinal", "title": null, "axis": {"labelAngle": 0, "labelFontSize": 13}, "scale": {"padding": 0.5}},
-        "y": {"field": "per_person", "type": "quantitative", "title": "Per person, per year"},
-        "color": {"field": "measure", "type": "nominal", "legend": null, "scale": {"range": ["#2f5d62", "#c08a3e", "#8b4a6b", "#7a8a99"]}}
+        "x": {
+          "field": "year",
+          "type": "ordinal",
+          "title": null,
+          "axis": { "labelAngle": 0, "labelFontSize": 13 },
+          "scale": { "padding": 0.5 }
+        },
+        "y": { "field": "per_person", "type": "quantitative", "title": "Per person, per year" },
+        "color": { "field": "measure", "type": "nominal", "legend": null, "scale": MEAS }
       },
       "layer": [
-        {"mark": {"type": "line", "strokeWidth": 2.5}, "encoding": {"detail": {"field": "measure"}}},
-        {"mark": {"type": "point", "filled": true, "size": 70}},
+        { "mark": { "type": "line", "strokeWidth": 2.5 }, "encoding": { "detail": { "field": "measure" } } },
+        { "mark": { "type": "point", "filled": true, "size": 70 } },
         {
-          "transform": [{"filter": "datum.year == '2023-24'"}],
-          "mark": {"type": "text", "align": "left", "dx": 10, "fontSize": 12},
-          "encoding": {"text": {"field": "measure"}}
+          "transform": [{ "filter": "datum.year == '2023-24'" }],
+          "mark": { "type": "text", "align": "left", "dx": 10, "fontSize": 12 },
+          "encoding": { "text": { "field": "measure" } }
         },
         {
-          "mark": {"type": "text", "dy": -10, "fontSize": 11},
-          "encoding": {"text": {"field": "per_person", "type": "quantitative"}}
+          "mark": { "type": "text", "dy": -10, "fontSize": 11 },
+          "encoding": { "text": { "field": "per_person", "type": "quantitative" } }
         }
       ]
-    });
+    }, { "width": "container", "autosize": { "type": "fit-x", "contains": "padding" } }));
   </script>
 </body>
 </html>
