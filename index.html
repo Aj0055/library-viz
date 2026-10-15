@@ -72,7 +72,7 @@
       background: #fff;
       border: 1px solid #cdd6d0;
       border-radius: 8px;
-      padding: 12px;
+      padding: 0;
       overflow: hidden;
     }
 
@@ -258,12 +258,11 @@
       el.textContent = 'Error in ' + id + ': ' + e.message;
     });
 
+    const PAD = { "left": 16, "right": 32, "top": 14, "bottom": 14 };
     const FIT = {
       "width": "container",
-      "autosize": {
-        "type": "fit-x",
-        "contains": "padding"
-      }
+      "autosize": { "type": "fit-x", "contains": "padding" },
+      "padding": PAD
     };
 
     const P = {
@@ -274,10 +273,7 @@
 
     const TOPO = {
       "url": "data/qld_lga.topojson",
-      "format": {
-        "type": "topojson",
-        "feature": "qld_lga"
-      }
+      "format": { "type": "topojson", "feature": "qld_lga" }
     };
 
     const STATS = (fields, parse) => ({
@@ -285,10 +281,7 @@
       "from": {
         "data": {
           "url": "data/library_stats.csv",
-          "format": {
-            "type": "csv",
-            "parse": Object.assign({ "lga_code_2021": "string" }, parse || {})
-          }
+          "format": { "type": "csv", "parse": Object.assign({ "lga_code_2021": "string" }, parse || {}) }
         },
         "key": "lga_code_2021",
         "fields": fields
@@ -492,6 +485,7 @@
     const ages = ["Early childhood", "Children", "Young adult", "Adults", "Seniors", "All ages"];
     show('vis8', {
       "$schema": S,
+      "padding": PAD,
       "title": "Who programs are for, and who turns up (Australia, 2023-24)",
       "data": { "url": "data/program_age.csv" },
       "transform": [
@@ -591,7 +585,7 @@
           "encoding": { "text": { "field": "per_person", "type": "quantitative" } }
         }
       ]
-    }, { "width": "container", "autosize": { "type": "fit-x", "contains": "padding" } }));
+    }, FIT));
   </script>
 </body>
 </html>
