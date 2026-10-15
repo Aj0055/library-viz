@@ -11,35 +11,42 @@
     :root {
       --ink: #1f2a2c;
       --muted: #5b6660;
-      --line: #d5dad3;
-      --bg: #eceee9;
     }
 
     body {
       margin: 0;
-      background: var(--bg);
       color: var(--ink);
       font: 18px/1.65 Georgia, serif;
+      background: #f3f5f1;
     }
 
-    main {
+    .band {
+      padding: 56px 20px;
+    }
+
+    .band.a {
+      background: #f3f5f1;
+    }
+
+    .band.b {
+      background: #e3ebe7;
+    }
+
+    .wrap {
       max-width: 800px;
       margin: 0 auto;
-      padding: 0 20px 60px;
     }
 
     h1 {
       font-size: 2.6rem;
       line-height: 1.1;
-      margin: 60px 0 16px;
+      margin: 0 0 16px;
     }
 
     h2 {
       font-size: 1.6rem;
       line-height: 1.25;
-      margin: 56px 0 12px;
-      padding-top: 24px;
-      border-top: 1px solid var(--line);
+      margin: 0 0 12px;
     }
 
     p {
@@ -49,30 +56,28 @@
     .lede {
       font-size: 1.25rem;
       color: var(--muted);
+      margin: 0;
     }
 
     .note {
       font: 14px/1.5 Arial, sans-serif;
       color: var(--muted);
-      margin: 8px 0 0;
+      margin: 10px 0 0;
     }
 
     .chart {
       width: 100%;
-      margin: 24px 0 0;
-      background: #fff;
-      border: 1px solid #d5dad3;
-      border-radius: 6px;
-      padding: 14px;
       box-sizing: border-box;
+      margin: 20px 0 0;
+      background: #fff;
+      border: 1px solid #cdd6d0;
+      border-radius: 8px;
+      padding: 12px;
+      overflow: hidden;
     }
 
-    .chart.narrow {
-      max-width: 520px;
-    }
-
-    .vega-embed,
-    .vega-embed details {
+    .vega-embed {
+      display: block !important;
       width: 100%;
     }
 
@@ -114,71 +119,97 @@
       margin-top: 4px;
     }
 
-    footer {
+    footer.band {
+      background: #cfdcd6;
       font: 14px/1.6 Arial, sans-serif;
-      color: var(--muted);
-      border-top: 1px solid var(--line);
-      margin-top: 56px;
-      padding-top: 20px;
+      color: #33403c;
     }
   </style>
 </head>
 <body>
-  <main>
-    <h1>Queensland's libraries: where they are and who they reach</h1>
-    <p class="lede">More than 300 libraries serve Queensland, from Brisbane's city branches to small outback branches. Do people use them equally everywhere?</p>
+  <header class="band a">
+    <div class="wrap">
+      <h1>Queensland's libraries: where they are and who they reach</h1>
+      <p class="lede">More than 300 libraries serve Queensland, from Brisbane's city branches to small outback branches. Do people use them equally everywhere?</p>
+    </div>
+  </header>
 
-    <h2>Borrowing is far from even</h2>
-    <p>In 2024-25 the average Queenslander borrowed 7.7 items from their council library. Gold Coast residents borrowed 12.3 each, while some remote councils borrowed fewer than one. Councils with no published figures are shown in grey.</p>
-    <div class="chart" id="vis">Loading map...</div>
-    <p class="note">Source: Queensland Public Libraries Statistical Bulletin 2024-25, State Library of Queensland. Loans include physical and digital items.</p>
+  <section class="band b">
+    <div class="wrap">
+      <h2>Borrowing is far from even</h2>
+      <p>In 2024-25 the average Queenslander borrowed 7.7 items from their council library. Gold Coast residents borrowed 12.3 each, while some remote councils borrowed fewer than one. Councils with no published figures are shown in grey.</p>
+      <div class="chart" id="vis">Loading map...</div>
+      <p class="note">Source: Queensland Public Libraries Statistical Bulletin 2024-25, State Library of Queensland. Loans include physical and digital items.</p>
+    </div>
+  </section>
 
-    <h2>Busy doors, big and small</h2>
-    <p>Visits tell a different story from loans. Brisbane recorded 5.4 million visits and the Gold Coast 2 million, but libraries are also places to use computers, meet people and get help. Circles sit at the centre of each council.</p>
-    <div class="chart" id="vis2">Loading map...</div>
-    <p class="note">Source: Queensland Public Libraries Statistical Bulletin 2024-25. Physical visits only.</p>
+  <section class="band a">
+    <div class="wrap">
+      <h2>Busy doors, big and small</h2>
+      <p>Visits tell a different story from loans. Brisbane recorded 5.4 million visits and the Gold Coast 2 million, but libraries are also places to use computers, meet people and get help. Circles sit at the centre of each council.</p>
+      <div class="chart" id="vis2">Loading map...</div>
+      <p class="note">Source: Queensland Public Libraries Statistical Bulletin 2024-25. Physical visits only.</p>
+    </div>
+  </section>
 
-    <h2>Does disadvantage change who borrows?</h2>
-    <p>Colour shows two things at once: how much residents borrow (left to right) and how advantaged the area is (bottom to top), using the ABS SEIFA index. A council in the bottom row is in the most disadvantaged 30% of Australian council areas.</p>
-    <div class="key">
-      <div class="rows">
-        <span>More advantaged</span>
-        <span>More disadvantaged</span>
-      </div>
-      <div>
-        <div class="grid" id="keygrid"></div>
-        <div class="cols">
-          <span>Low borrowing</span>
-          <span>High borrowing</span>
+  <section class="band b">
+    <div class="wrap">
+      <h2>Does disadvantage change who borrows?</h2>
+      <p>Colour shows two things at once: how much residents borrow (left to right) and how advantaged the area is (bottom to top), using the ABS SEIFA index. A council in the bottom row is in the most disadvantaged 30% of Australian council areas.</p>
+      <div class="key">
+        <div class="rows">
+          <span>More advantaged</span>
+          <span>More disadvantaged</span>
+        </div>
+        <div>
+          <div class="grid" id="keygrid"></div>
+          <div class="cols">
+            <span>Low borrowing</span>
+            <span>High borrowing</span>
+          </div>
         </div>
       </div>
+      <div class="chart" id="vis4">Loading map...</div>
+      <p class="note">Sources: State Library of Queensland (2024-25); ABS SEIFA 2021, Index of Relative Socio-economic Disadvantage. SEIFA describes areas, not individual residents.</p>
     </div>
-    <div class="chart" id="vis4">Loading map...</div>
-    <p class="note">Sources: State Library of Queensland (2024-25); ABS SEIFA 2021, Index of Relative Socio-economic Disadvantage. SEIFA describes areas, not individual residents.</p>
+  </section>
 
-    <h2>Who borrows the most?</h2>
-    <p>The highest-borrowing councils are mostly in the south-east. Smaller rural councils are spread widely, and some borrow as much as city councils.</p>
-    <div class="chart" id="vis7">Loading chart...</div>
-    <div class="chart" id="vis6">Loading chart...</div>
-    <p class="note">Source: Queensland Public Libraries Statistical Bulletin 2024-25.</p>
+  <section class="band a">
+    <div class="wrap">
+      <h2>Who borrows the most?</h2>
+      <p>The highest-borrowing councils are mostly in the south-east. Smaller rural councils are spread widely, and some borrow as much as city councils.</p>
+      <div class="chart" id="vis7">Loading chart...</div>
+      <div class="chart" id="vis6">Loading chart...</div>
+      <p class="note">Source: Queensland Public Libraries Statistical Bulletin 2024-25.</p>
+    </div>
+  </section>
 
-    <h2>What libraries offer</h2>
-    <p>Early childhood programs are about 31% of all sessions but draw about 51% of everyone who attends, so storytimes and rhyme sessions reach the most people.</p>
-    <div class="chart" id="vis8">Loading chart...</div>
-    <p class="note">Source: Australian Public Libraries Statistical Report 2023-24 (ALIA and NSLA), national figures.</p>
+  <section class="band b">
+    <div class="wrap">
+      <h2>What libraries offer</h2>
+      <p>Early childhood programs are about 31% of all sessions but draw about 51% of everyone who attends, so storytimes and rhyme sessions reach the most people.</p>
+      <div class="chart" id="vis8">Loading chart...</div>
+      <p class="note">Source: Australian Public Libraries Statistical Report 2023-24 (ALIA and NSLA), national figures.</p>
+    </div>
+  </section>
 
-    <h2>Back to the library, after COVID</h2>
-    <p>Across Australia, in-person visits fell during the pandemic and have recovered to about 3.2 per person. Borrowing has grown from 5.5 to 6.5 items per person, while website visits have dropped.</p>
-    <div class="chart" id="vis5">Loading chart...</div>
-    <div class="chart narrow" id="vis3">Loading chart...</div>
-    <p class="note">Source: Australian Public Libraries Statistical Report 2023-24 (ALIA and NSLA).</p>
+  <section class="band a">
+    <div class="wrap">
+      <h2>Back to the library, after COVID</h2>
+      <p>Across Australia, in-person visits fell during the pandemic and have recovered to about 3.2 per person. Borrowing has grown from 5.5 to 6.5 items per person, while website visits have dropped.</p>
+      <div class="chart" id="vis5">Loading chart...</div>
+      <div class="chart" id="vis3">Loading chart...</div>
+      <p class="note">Source: Australian Public Libraries Statistical Report 2023-24 (ALIA and NSLA).</p>
+    </div>
+  </section>
 
-    <footer>
+  <footer class="band">
+    <div class="wrap">
       <p><strong>Author:</strong> Ajay Bellamkonda, FIT3179 Data Visualisation 2, Monash University. 15/10/2026.</p>
       <p><strong>Data:</strong> State Library of Queensland, <em>Queensland Public Libraries Statistical Bulletin 2024-25</em>; ALIA and NSLA, <em>Australian Public Libraries Statistical Report 2023-24</em>; Australian Bureau of Statistics, SEIFA 2021 and ASGS Edition 3 boundaries.</p>
       <p><strong>AI use:</strong> Claude (Anthropic) helped write the chart code and page text.</p>
-    </footer>
-  </main>
+    </div>
+  </footer>
 
   <script>
     const S = "https://vega.github.io/schema/vega-lite/v5.json";
@@ -198,7 +229,7 @@
 
     const CONFIG = {
       font: "Arial",
-      background: "#ffffff",
+      background: null,
       view: { stroke: null },
       title: {
         anchor: "start",
