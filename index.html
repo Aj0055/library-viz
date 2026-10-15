@@ -12,7 +12,7 @@
       --ink: #1f2a2c;
       --muted: #5b6660;
       --line: #d5dad3;
-      --bg: #f7f8f5;
+      --bg: #eceee9;
     }
 
     body {
@@ -60,6 +60,11 @@
     .chart {
       width: 100%;
       margin: 24px 0 0;
+      background: #fff;
+      border: 1px solid #d5dad3;
+      border-radius: 6px;
+      padding: 14px;
+      box-sizing: border-box;
     }
 
     .chart.narrow {
@@ -124,7 +129,7 @@
     <p class="lede">More than 300 libraries serve Queensland, from Brisbane's city branches to small outback branches. Do people use them equally everywhere?</p>
 
     <h2>Borrowing is far from even</h2>
-    <p>In 2024-25 the average Queenslander borrowed 7.7 items from their council library. Gold Coast residents borrowed 12.3 each, while some remote councils borrowed fewer than one. Councils with no published figures are left white.</p>
+    <p>In 2024-25 the average Queenslander borrowed 7.7 items from their council library. Gold Coast residents borrowed 12.3 each, while some remote councils borrowed fewer than one. Councils with no published figures are shown in grey.</p>
     <div class="chart" id="vis">Loading map...</div>
     <p class="note">Source: Queensland Public Libraries Statistical Bulletin 2024-25, State Library of Queensland. Loans include physical and digital items.</p>
 
@@ -184,15 +189,16 @@
       mid: "#46888b",
       light: "#b7d6d4",
       pale: "#e3efee",
-      slate: "#6c7ba3",
-      navy: "#1f3a5f",
+      slate: "#7a8a99",
+      violet: "#8c62aa",
+      sky: "#5698b9",
       grey: "#e4e7e2",
       line: "#ffffff"
     };
 
     const CONFIG = {
       font: "Arial",
-      background: null,
+      background: "#ffffff",
       view: { stroke: null },
       title: {
         anchor: "start",
@@ -262,8 +268,8 @@
       "data": TOPO,
       "mark": {
         "type": "geoshape",
-        "fill": "#ffffff",
-        "stroke": "#b5bbb5",
+        "fill": "#e9ebe7",
+        "stroke": "#ffffff",
         "strokeWidth": 0.4
       }
     };
@@ -275,14 +281,14 @@
         "Website visits",
         "Items in collection"
       ],
-      "range": [C.dark, C.mid, C.slate, C.navy]
+      "range": [C.dark, C.sky, C.violet, C.slate]
     };
 
     // Bivariate palette: first digit = borrowing (teal), second digit = advantage (slate-blue)
     const cols = {
-      "00": "#e8eaed", "10": "#a9d6d4", "20": "#46888b",
-      "01": "#b4bdd3", "11": "#7fa3b0", "21": "#3a7280",
-      "02": "#6c7ba3", "12": "#46648f", "22": "#1f3a5f"
+      "00": "#e8e8e8", "10": "#ace4e4", "20": "#5ac8c8",
+      "01": "#dfb0d6", "11": "#a5add3", "21": "#5698b9",
+      "02": "#be64ac", "12": "#8c62aa", "22": "#3b4994"
     };
 
     document.getElementById('keygrid').innerHTML = [
@@ -445,7 +451,7 @@
           "field": "group",
           "type": "nominal",
           "legend": null,
-          "scale": { "range": [C.dark, C.slate] }
+          "scale": { "range": [C.dark, C.violet] }
         },
         "tooltip": [{ "field": "name", "title": "Council" }, { "field": "usage_pc", "title": "Loans per resident" }]
       }
@@ -466,7 +472,7 @@
         {
           "width": 260,
           "height": 240,
-          "mark": { "type": "bar", "color": C.slate },
+          "mark": { "type": "bar", "color": C.violet },
           "encoding": {
             "y": { "field": "age", "type": "ordinal", "sort": ages, "axis": null },
             "x": {
