@@ -33,8 +33,57 @@
     }
 
     .wrap {
-      max-width: 800px;
+      max-width: 1100px;
       margin: 0 auto;
+    }
+
+    .text {
+      max-width: 760px;
+    }
+
+    .grid2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 20px;
+      align-items: stretch;
+    }
+
+    .grid2 .chart {
+      margin: 0;
+    }
+
+    .kpis {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-top: 28px;
+    }
+
+    .kpi {
+      background: #fff;
+      border: 1px solid #cdd6d0;
+      border-radius: 8px;
+      padding: 16px 18px;
+      font: 14px/1.4 Arial, sans-serif;
+      color: #5b6660;
+    }
+
+    .kpi b {
+      display: block;
+      font: 600 2rem/1.1 Georgia, serif;
+      color: #1f5559;
+      margin-bottom: 4px;
+    }
+
+    @media (max-width: 900px) {
+      .grid2 {
+        grid-template-columns: 1fr;
+      }
+
+      .kpis {
+        grid-template-columns: 1fr 1fr;
+      }
     }
 
     h1 {
@@ -73,7 +122,7 @@
       border: 1px solid #cdd6d0;
       border-radius: 8px;
       padding: 0;
-      overflow: hidden;
+      overflow-x: auto;
     }
 
     .vega-embed {
@@ -130,32 +179,45 @@
   <header class="band a">
     <div class="wrap">
       <h1>Queensland's libraries: where they are and who they reach</h1>
-      <p class="lede">More than 300 libraries serve Queensland, from Brisbane's city branches to small outback branches. Do people use them equally everywhere?</p>
+      <p class="lede text">More than 300 libraries serve Queensland, from Brisbane's city branches to small outback branches. Do people use them equally everywhere?</p>
+      <div class="kpis">
+        <div class="kpi"><b>311</b>branches and community libraries</div>
+        <div class="kpi"><b>1.7 million</b>registered members</div>
+        <div class="kpi"><b>41.6 million</b>items borrowed in 2024-25</div>
+        <div class="kpi"><b>16.9 million</b>in-person visits</div>
+      </div>
+      <p class="note">Sources: State Library of Queensland, Statistical Bulletin 2024-25 and public library directory.</p>
     </div>
   </header>
 
   <section class="band b">
     <div class="wrap">
       <h2>Borrowing is far from even</h2>
-      <p>In 2024-25 the average Queenslander borrowed 7.7 items from their council library. Gold Coast residents borrowed 12.3 each, while some remote councils borrowed fewer than one. Councils with no published figures are shown in grey.</p>
-      <div class="chart" id="vis">Loading map...</div>
-      <p class="note">Source: Queensland Public Libraries Statistical Bulletin 2024-25, State Library of Queensland. Loans include physical and digital items.</p>
+      <p class="text">In 2024-25 the average Queenslander borrowed 7.7 items from their council library. Gold Coast residents borrowed 12.3 each, while some remote councils borrowed fewer than one. Councils with no published figures are shown in grey.</p>
+      <div class="grid2">
+        <div class="chart" id="vis">Loading...</div>
+        <div class="chart" id="vis7">Loading...</div>
+      </div>
+      <p class="note">Source: Queensland Public Libraries Statistical Bulletin 2024-25, State Library of Queensland. Loans include physical and digital items. The top 15 includes larger (independent) councils only.</p>
     </div>
   </section>
 
   <section class="band a">
     <div class="wrap">
       <h2>Busy doors, big and small</h2>
-      <p>Visits tell a different story from loans. Brisbane recorded 5.4 million visits and the Gold Coast 2 million, but libraries are also places to use computers, meet people and get help. Circles sit at the centre of each council.</p>
-      <div class="chart" id="vis2">Loading map...</div>
-      <p class="note">Source: Queensland Public Libraries Statistical Bulletin 2024-25. Physical visits only.</p>
+      <p class="text">Visits tell a different story from loans. Brisbane recorded 5.4 million visits and the Gold Coast 2 million. Across Australia, in-person visits fell during the pandemic and have recovered to about 3.2 per person, while website visits have dropped.</p>
+      <div class="grid2">
+        <div class="chart" id="vis2">Loading...</div>
+        <div class="chart" id="vis5">Loading...</div>
+      </div>
+      <p class="note">Sources: Queensland Public Libraries Statistical Bulletin 2024-25 (physical visits; circles sit at each council centre); Australian Public Libraries Statistical Report 2023-24 (ALIA and NSLA).</p>
     </div>
   </section>
 
   <section class="band b">
     <div class="wrap">
       <h2>Does disadvantage change who borrows?</h2>
-      <p>Colour shows two things at once: how much residents borrow (left to right) and how advantaged the area is (bottom to top), using the ABS SEIFA index. A council in the bottom row is in the most disadvantaged 30% of Australian council areas.</p>
+      <p class="text">Colour shows two things at once: how much residents borrow (left to right) and how advantaged the area is (bottom to top), using the ABS SEIFA index. Larger councils generally borrow more, but smaller rural councils range widely.</p>
       <div class="key">
         <div class="rows">
           <span>More advantaged</span>
@@ -169,37 +231,23 @@
           </div>
         </div>
       </div>
-      <div class="chart" id="vis4">Loading map...</div>
+      <div class="grid2">
+        <div class="chart" id="vis4">Loading...</div>
+        <div class="chart" id="vis6">Loading...</div>
+      </div>
       <p class="note">Sources: State Library of Queensland (2024-25); ABS SEIFA 2021, Index of Relative Socio-economic Disadvantage. SEIFA describes areas, not individual residents.</p>
     </div>
   </section>
 
   <section class="band a">
     <div class="wrap">
-      <h2>Who borrows the most?</h2>
-      <p>The highest-borrowing councils are mostly in the south-east. Smaller rural councils are spread widely, and some borrow as much as city councils.</p>
-      <div class="chart" id="vis7">Loading chart...</div>
-      <div class="chart" id="vis6">Loading chart...</div>
-      <p class="note">Source: Queensland Public Libraries Statistical Bulletin 2024-25.</p>
-    </div>
-  </section>
-
-  <section class="band b">
-    <div class="wrap">
-      <h2>What libraries offer</h2>
-      <p>Early childhood programs are about 31% of all sessions but draw about 51% of everyone who attends, so storytimes and rhyme sessions reach the most people.</p>
-      <div class="chart" id="vis8">Loading chart...</div>
-      <p class="note">Source: Australian Public Libraries Statistical Report 2023-24 (ALIA and NSLA), national figures.</p>
-    </div>
-  </section>
-
-  <section class="band a">
-    <div class="wrap">
-      <h2>Back to the library, after COVID</h2>
-      <p>Across Australia, in-person visits fell during the pandemic and have recovered to about 3.2 per person. Borrowing has grown from 5.5 to 6.5 items per person, while website visits have dropped.</p>
-      <div class="chart" id="vis5">Loading chart...</div>
-      <div class="chart" id="vis3">Loading chart...</div>
-      <p class="note">Source: Australian Public Libraries Statistical Report 2023-24 (ALIA and NSLA).</p>
+      <h2>What libraries offer, and how that is changing</h2>
+      <p class="text">Early childhood programs are about 31% of all sessions but draw about 51% of everyone who attends. Compared with before COVID, Australians now borrow about 18% more items each, while website visits are down.</p>
+      <div class="grid2">
+        <div class="chart" id="vis8">Loading...</div>
+        <div class="chart" id="vis3">Loading...</div>
+      </div>
+      <p class="note">Source: Australian Public Libraries Statistical Report 2023-24 (ALIA and NSLA), national figures. Changes are calculated from the per-person figures in the report.</p>
     </div>
   </section>
 
@@ -324,7 +372,7 @@
     // Map 1: choropleth
     show('vis', Object.assign({
       "$schema": S,
-      "height": 540,
+      "height": 460,
       "projection": P,
       "title": "Loans per resident, 2024-25",
       "layer": [
@@ -361,7 +409,7 @@
     // Map 2: proportional symbols
     show('vis2', Object.assign({
       "$schema": S,
-      "height": 540,
+      "height": 460,
       "projection": P,
       "title": "Physical library visits, 2024-25",
       "layer": [
@@ -402,7 +450,7 @@
     // Map 3: bivariate
     show('vis4', Object.assign({
       "$schema": S,
-      "height": 540,
+      "height": 460,
       "projection": P,
       "title": "Library use and disadvantage together",
       "layer": [
@@ -434,7 +482,7 @@
     // Lollipop
     show('vis7', Object.assign({
       "$schema": S,
-      "height": 360,
+      "height": 460,
       "title": "Top 15 borrowing councils (larger councils)",
       "data": { "url": "data/library_stats.csv" },
       "transform": [
@@ -458,7 +506,7 @@
     // Jitter
     show('vis6', Object.assign({
       "$schema": S,
-      "height": 220,
+      "height": 460,
       "title": "Loans per resident, council by council",
       "data": { "url": "data/library_stats.csv" },
       "transform": [
@@ -495,8 +543,8 @@
       ],
       "hconcat": [
         {
-          "width": 260,
-          "height": 240,
+          "width": 170,
+          "height": 300,
           "mark": { "type": "bar", "color": C.violet },
           "encoding": {
             "y": { "field": "age", "type": "ordinal", "sort": ages, "axis": null },
@@ -510,8 +558,8 @@
           }
         },
         {
-          "width": 260,
-          "height": 240,
+          "width": 170,
+          "height": 300,
           "mark": { "type": "bar", "color": C.dark },
           "encoding": {
             "y": {
@@ -536,7 +584,7 @@
     // Line chart
     show('vis5', Object.assign({
       "$schema": S,
-      "height": 320,
+      "height": 460,
       "title": "Australia: five years of library use, per person",
       "data": { "url": "data/national_per_person.csv" },
       "mark": { "type": "line", "point": true, "strokeWidth": 2.5 },
@@ -554,36 +602,34 @@
       }
     }, FIT));
 
-    // Slope chart
+    // Change since before COVID (diverging lollipop)
     show('vis3', Object.assign({
       "$schema": S,
-      "height": 420,
-      "title": "Australia, per person: before COVID vs now",
+      "height": 300,
+      "title": "Change per person since 2019-20",
       "data": { "url": "data/national_per_person.csv" },
-      "transform": [{ "filter": "datum.year == '2019-20' || datum.year == '2023-24'" }],
+      "transform": [
+        { "filter": "datum.year == '2019-20' || datum.year == '2023-24'" },
+        { "pivot": "year", "value": "per_person", "groupby": ["measure"] },
+        { "calculate": "(datum['2023-24'] - datum['2019-20']) / datum['2019-20']", "as": "change" }
+      ],
       "encoding": {
-        "x": {
-          "field": "year",
-          "type": "ordinal",
-          "title": null,
-          "axis": { "labelAngle": 0, "labelFontSize": 13 },
-          "scale": { "padding": 0.5 }
-        },
-        "y": { "field": "per_person", "type": "quantitative", "title": "Per person, per year" },
-        "color": { "field": "measure", "type": "nominal", "legend": null, "scale": MEAS }
+        "y": { "field": "measure", "type": "nominal", "sort": "-x", "title": null, "axis": { "labelLimit": 170 } },
+        "x": { "field": "change", "type": "quantitative", "title": "Change from 2019-20 to 2023-24", "axis": { "format": "+%" } }
       },
       "layer": [
-        { "mark": { "type": "line", "strokeWidth": 2.5 }, "encoding": { "detail": { "field": "measure" } } },
-        { "mark": { "type": "point", "filled": true, "size": 70 } },
+        { "mark": { "type": "rule", "strokeWidth": 2, "color": "#b7d6d4" }, "encoding": { "x2": { "datum": 0 } } },
         {
-          "transform": [{ "filter": "datum.year == '2023-24'" }],
-          "mark": { "type": "text", "align": "left", "dx": 10, "fontSize": 12 },
-          "encoding": { "text": { "field": "measure" } }
+          "mark": { "type": "circle", "size": 160 },
+          "encoding": {
+            "color": {
+              "condition": { "test": "datum.change >= 0", "value": C.dark },
+              "value": C.violet
+            },
+            "tooltip": [{ "field": "measure" }, { "field": "change", "type": "quantitative", "format": "+.0%", "title": "Change" }]
+          }
         },
-        {
-          "mark": { "type": "text", "dy": -10, "fontSize": 11 },
-          "encoding": { "text": { "field": "per_person", "type": "quantitative" } }
-        }
+        { "mark": { "type": "text", "dy": -14, "fontSize": 12 }, "encoding": { "text": { "field": "change", "type": "quantitative", "format": "+.0%" } } }
       ]
     }, FIT));
   </script>
