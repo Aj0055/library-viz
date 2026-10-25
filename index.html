@@ -163,10 +163,10 @@ show('vis9', Object.assign({"$schema":S, "height":520, "title":"Each line is one
   {"window":[{"op":"percent_rank", "as":"rank"}], "groupby":["key"], "sort":[{"field":"value"}]},
   {"calculate":"datum.key=='members_pct' ? 'Members % of residents' : datum.key=='visits_pc' ? 'Visits per resident' : datum.key=='usage_pc' ? 'Loans per resident' : 'Advantage (SEIFA score)'", "as":"axis"}],
  "params":[{"name":"hov", "select":{"type":"point", "on":"mouseover", "fields":["name"], "clear":"mouseout"}}],
- "mark":{"type":"line", "point":{"filled":true, "size":36}},
- "encoding":{"x":{"field":"axis", "type":"ordinal", "sort":AX, "title":null, "axis":{"grid":true, "gridColor":"#9aa5a0", "labelAngle":0, "labelLimit":90, "labelPadding":8, "orient":"top"}},
+ "mark":{"type":"line", "point":{"filled":true, "size":22}},
+ "encoding":{"x":{"field":"axis", "type":"ordinal", "sort":AX, "title":null, "axis":{"grid":true, "gridColor":"#9aa5a0", "labelAngle":0, "labelLimit":180, "labelFontSize":12, "labelPadding":8, "orient":"top"}},
   "y":{"field":"rank", "type":"quantitative", "title":"Rank among councils (low to high)", "axis":{"format":"%"}},
-  "detail":{"field":"name"}, "opacity":{"condition":{"param":"hov", "empty":false, "value":1}, "value":0.28}, "strokeWidth":{"condition":{"param":"hov", "empty":false, "value":4}, "value":1.1}, "color":{"field":"svc", "type":"nominal", "title":"Council type", "scale":{"domain":["IND","RLQ"], "range":[C.dark, C.violet]}, "legend":{"orient":"bottom", "labelExpr":"datum.value == 'IND' ? 'Larger (independent)' : 'Smaller rural'"}},
+  "detail":{"field":"name"}, "opacity":{"condition":[{"param":"hov", "empty":false, "value":1}, {"test":"length(data('hov_store')) > 0", "value":0.05}], "value":0.18}, "strokeWidth":{"condition":{"param":"hov", "empty":false, "value":3.5}, "value":0.8}, "color":{"field":"svc", "type":"nominal", "title":"Council type", "scale":{"domain":["IND","RLQ"], "range":[C.dark, C.violet]}, "legend":{"orient":"bottom", "labelExpr":"datum.value == 'IND' ? 'Larger (independent)' : 'Smaller rural'"}},
   "tooltip":[{"field":"name", "title":"Council"}]}}, FIT));
 
 // Heatmap: share of each council's program sessions by audience
