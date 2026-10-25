@@ -76,6 +76,16 @@
       margin-bottom: 4px;
     }
 
+    .stack {
+      display: grid;
+      gap: 24px;
+      align-content: start;
+    }
+
+    .stack .chart {
+      margin: 0;
+    }
+
     @media (max-width: 900px) {
       .grid2 {
         grid-template-columns: 1fr;
@@ -217,7 +227,7 @@
   <section class="band b">
     <div class="wrap">
       <h2>Does disadvantage change who borrows?</h2>
-      <p class="text">Colour shows two things at once: how much residents borrow (left to right) and how advantaged the area is (bottom to top), using the ABS SEIFA index. Larger councils generally borrow more, but smaller rural councils range widely.</p>
+      <p class="text">Colour shows two things at once: how much residents borrow (left to right) and how advantaged the area is (bottom to top), using the ABS SEIFA index. Hover over a council to see its figures.</p>
       <div class="key">
         <div class="rows">
           <span>More advantaged</span>
@@ -231,23 +241,44 @@
           </div>
         </div>
       </div>
-      <div class="grid2">
-        <div class="chart" id="vis4">Loading...</div>
-        <div class="chart" id="vis6">Loading...</div>
-      </div>
+      <div class="chart" id="vis4">Loading...</div>
       <p class="note">Sources: State Library of Queensland (2024-25); ABS SEIFA 2021, Index of Relative Socio-economic Disadvantage. SEIFA describes areas, not individual residents.</p>
     </div>
   </section>
 
   <section class="band a">
     <div class="wrap">
-      <h2>What libraries offer, and how that is changing</h2>
-      <p class="text">Early childhood programs are about 31% of all sessions but draw about 51% of everyone who attends. Compared with before COVID, Australians now borrow about 18% more items each, while website visits are down.</p>
+      <h2>Do the measures move together?</h2>
+      <p class="text">Larger councils generally borrow more, but smaller rural councils vary widely. On the right, each line is one council. Follow it across to see whether a council that ranks high on membership also ranks high on visits, loans and advantage.</p>
       <div class="grid2">
-        <div class="chart" id="vis8">Loading...</div>
-        <div class="chart" id="vis3">Loading...</div>
+        <div class="chart" id="vis6">Loading...</div>
+        <div class="chart" id="vis9">Loading...</div>
       </div>
-      <p class="note">Source: Australian Public Libraries Statistical Report 2023-24 (ALIA and NSLA), national figures. Changes are calculated from the per-person figures in the report.</p>
+      <p class="note">Source: Queensland Public Libraries Statistical Bulletin 2024-25; ABS SEIFA 2021. Positions on the right show each council's rank on each measure, so extreme values do not squash the chart.</p>
+    </div>
+  </section>
+
+  <section class="band b">
+    <div class="wrap">
+      <h2>What libraries offer, and how that is changing</h2>
+      <p class="text">Council programs lean heavily towards young children. Early childhood programs are about 31% of all sessions Australia-wide but draw about 51% of everyone who attends. Compared with before COVID, Australians now borrow about 18% more items each, while website visits are down.</p>
+      <div class="grid2">
+        <div class="chart" id="vis10">Loading...</div>
+        <div class="stack">
+          <div class="chart" id="vis8">Loading...</div>
+          <div class="chart" id="vis3">Loading...</div>
+        </div>
+      </div>
+      <p class="note">Sources: Queensland Public Libraries Statistical Bulletin 2024-25 (heatmap, councils with 100+ sessions; "adults and all ages" is the remainder after the three age groups); Australian Public Libraries Statistical Report 2023-24 (national charts).</p>
+    </div>
+  </section>
+
+  <section class="band a">
+    <div class="wrap">
+      <h2>Who pays for the library?</h2>
+      <p class="text">Most of the money comes from local councils, with State Library of Queensland grants adding a smaller amount per resident. The gap between the two varies a lot between councils.</p>
+      <div class="chart" id="vis11">Loading...</div>
+      <p class="note">Source: Queensland Public Libraries Statistical Bulletin 2024-25, finance - income. Independent councils only; rural councils do not report local contributions.</p>
     </div>
   </section>
 
@@ -450,7 +481,7 @@
     // Map 3: bivariate
     show('vis4', Object.assign({
       "$schema": S,
-      "height": 460,
+      "height": 560,
       "projection": P,
       "title": "Library use and disadvantage together",
       "layer": [
@@ -630,6 +661,120 @@
           }
         },
         { "mark": { "type": "text", "dy": -14, "fontSize": 12 }, "encoding": { "text": { "field": "change", "type": "quantitative", "format": "+.0%" } } }
+      ]
+    }, FIT));
+
+    // Parallel coordinates (each council is one line; position = rank on each measure)
+    const AX = ["Members % of residents", "Visits per resident", "Loans per resident", "Advantage (SEIFA score)"];
+    show('vis9', Object.assign({
+      "$schema": S,
+      "height": 460,
+      "title": "Each line is one council",
+      "data": { "url": "data/library_stats.csv" },
+      "transform": [
+        { "filter": "isValid(datum.usage_pc) && isValid(datum.members_pct) && isValid(datum.visits_pc)" },
+        { "fold": ["members_pct", "visits_pc", "usage_pc", "irsd_score"], "as": ["key", "value"] },
+        { "window": [{ "op": "percent_rank", "as": "rank" }], "groupby": ["key"], "sort": [{ "field": "value" }] },
+        { "calculate": "datum.key=='members_pct' ? 'Members % of residents' : datum.key=='visits_pc' ? 'Visits per resident' : datum.key=='usage_pc' ? 'Loans per resident' : 'Advantage (SEIFA score)'", "as": "axis" }
+      ],
+      "mark": { "type": "line", "opacity": 0.55, "strokeWidth": 1.6 },
+      "encoding": {
+        "x": {
+          "field": "axis",
+          "type": "ordinal",
+          "sort": AX,
+          "title": null,
+          "axis": { "grid": true, "gridColor": "#9aa5a0", "labelAngle": 0, "labelLimit": 90, "labelPadding": 8, "orient": "top" }
+        },
+        "y": { "field": "rank", "type": "quantitative", "title": "Rank among councils (low to high)", "axis": { "format": "%" } },
+        "detail": { "field": "name" },
+        "color": {
+          "field": "svc",
+          "type": "nominal",
+          "title": "Council type",
+          "scale": { "domain": ["IND", "RLQ"], "range": [C.dark, C.violet] },
+          "legend": { "orient": "bottom", "labelExpr": "datum.value == 'IND' ? 'Larger (independent)' : 'Smaller rural'" }
+        },
+        "tooltip": [{ "field": "name", "title": "Council" }]
+      }
+    }, FIT));
+
+    // Heatmap: share of each council's program sessions by audience
+    show('vis10', Object.assign({
+      "$schema": S,
+      "title": "Who each council's programs are for",
+      "data": { "url": "data/programs_age.csv" },
+      "height": { "step": 13 },
+      "mark": "rect",
+      "encoding": {
+        "x": {
+          "field": "group",
+          "type": "ordinal",
+          "title": null,
+          "sort": ["Ages 0-5", "Ages 6-12", "Ages 13-17", "Adults and all ages"],
+          "axis": { "labelAngle": 0, "labelLimit": 80, "orient": "top" }
+        },
+        "y": {
+          "field": "name",
+          "type": "nominal",
+          "title": null,
+          "sort": { "field": "total", "op": "max", "order": "descending" },
+          "axis": { "labelFontSize": 10 }
+        },
+        "color": {
+          "field": "share",
+          "type": "quantitative",
+          "title": "Share of sessions",
+          "scale": { "range": [C.pale, C.dark] },
+          "legend": { "orient": "bottom", "format": "%" }
+        },
+        "tooltip": [
+          { "field": "name", "title": "Council" },
+          { "field": "total", "title": "Sessions in 2024-25", "format": "," },
+          { "field": "group", "title": "Audience" },
+          { "field": "share", "title": "Share", "format": ".0%" }
+        ]
+      }
+    }, FIT));
+
+    // Dumbbell: who pays, per resident
+    show('vis11', Object.assign({
+      "$schema": S,
+      "title": "Funding per resident, independent councils (2024-25)",
+      "data": { "url": "data/funding.csv" },
+      "height": { "step": 18 },
+      "transform": [
+        { "fold": ["local_pc", "state_pc"], "as": ["source", "value"] },
+        { "calculate": "datum.source == 'local_pc' ? 'Local council' : 'State Library of Queensland'", "as": "payer" }
+      ],
+      "encoding": {
+        "y": {
+          "field": "name",
+          "type": "nominal",
+          "title": null,
+          "sort": { "field": "local_pc", "op": "max", "order": "descending" }
+        },
+        "x": { "field": "value", "type": "quantitative", "title": "Dollars per resident", "axis": { "format": "$.0f" } }
+      },
+      "layer": [
+        { "mark": { "type": "line", "color": "#b7d6d4", "strokeWidth": 3 }, "encoding": { "detail": { "field": "name" } } },
+        {
+          "mark": { "type": "circle", "size": 110, "opacity": 1 },
+          "encoding": {
+            "color": {
+              "field": "payer",
+              "type": "nominal",
+              "title": null,
+              "scale": { "domain": ["Local council", "State Library of Queensland"], "range": [C.dark, C.violet] },
+              "legend": { "orient": "top" }
+            },
+            "tooltip": [
+              { "field": "name", "title": "Council" },
+              { "field": "payer", "title": "Source" },
+              { "field": "value", "title": "Per resident", "format": "$.2f" }
+            ]
+          }
+        }
       ]
     }, FIT));
   </script>
