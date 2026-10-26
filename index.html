@@ -188,7 +188,7 @@ show('vis4', Object.assign({"$schema":S, "height":560, "projection":P, "title":"
 
 // Lollipop
 show('vis7', Object.assign({"$schema":S, "height":460, "title":"Top 15 borrowing councils (larger councils)", "data":{"url":"data/library_stats.csv"},
- "transform":[{"filter":"isValid(datum.usage_pc) && datum.svc == 'IND'"},
+ "transform":[{"filter":"isValid(datum.usage_pc)"},
   {"window":[{"op":"rank", "as":"rank"}], "sort":[{"field":"usage_pc", "order":"descending"}]}, {"filter":"datum.rank <= 15"}],
  "encoding":{"y":{"field":"name", "type":"nominal", "sort":"-x", "title":null}, "x":{"field":"usage_pc", "type":"quantitative", "title":"Items borrowed per resident"}},
  "layer":[{"mark":{"type":"rule", "color":C.light, "strokeWidth":2}, "encoding":{"x2":{"datum":0}}},
