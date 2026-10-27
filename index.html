@@ -378,7 +378,6 @@
           <div class="chart" id="vis4">Loading...</div>
           <figcaption class="cap">SEIFA describes areas, not individuals. Sources: State Library of Queensland (2024-25); ABS SEIFA 2021.<span class="insight"> Of the 23 councils in the most disadvantaged group (SEIFA deciles 1-3), 7 are in the top third for borrowing and 7 are in the bottom third.</span></figcaption>
         </figure>
-        <figcaption>Sources: State Library of Queensland (2024-25); ABS SEIFA 2021, Index of Relative Socio-economic Disadvantage. SEIFA describes areas, not individual residents.</figcaption>
       </figure>
       <div class="section-takeaway">At the other end, of the 9 most advantaged councils (SEIFA deciles 8-10), 5 are in the top third for borrowing and 3 are in the bottom third.</div>
     </div>
@@ -834,15 +833,27 @@
       title: "Who each council's programs are for",
       data: { url: "data/programs_age.csv" },
       height: { step: 13 },
+      transform: [
+        {
+          calculate: "datum.group == 'Adults and all ages' || datum.group == 'Adults Onwards' ? 'Adults & all' : datum.group",
+          as: "group_clean"
+        }
+      ],
       mark: "rect",
       encoding: {
-        x: { field: "group", type: "ordinal", title: null, sort: ["Ages 0-5", "Ages 6-12", "Ages 13-17", "Adults Onwards"], axis: { labelAngle: 0, labelLimit: 80, orient: "top" } },
+        x: { 
+          field: "group_clean", 
+          type: "ordinal", 
+          title: null, 
+          sort: ["Ages 0-5", "Ages 6-12", "Ages 13-17", "Adults & all"], 
+          axis: { labelAngle: 0, labelLimit: 140, orient: "top" } 
+        },
         y: { field: "name", type: "nominal", title: null, sort: { field: "total", op: "max", order: "descending" }, axis: { labelFontSize: 10 } },
         color: { field: "share", type: "quantitative", title: "Share of sessions", scale: { range: [C.pale, C.dark] }, legend: { orient: "bottom", format: "%" } },
         tooltip: [
           { field: "name", title: "Council" },
           { field: "total", title: "Sessions in 2024-25", format: "," },
-          { field: "group", title: "Audience" },
+          { field: "group_clean", title: "Audience" },
           { field: "share", title: "Share", format: ".0%" }
         ]
       }
