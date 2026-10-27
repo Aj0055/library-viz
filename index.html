@@ -308,7 +308,7 @@
       <p class="text">Across Australia, library engagement varies sharply by region. Queensland leads the nation in per-capita borrowing, averaging 7.8 items per resident compared to a national average of 6.5.</p>
       <figure class="card">
         <div class="chart" id="vis0">Loading...</div>
-        <figcaption class="cap">Each tile is a state or territory, placed roughly where it sits on the map so that every state is the same size. Loans include physical and digital items. States collect data differently, so comparisons are indicative. Source: ALIA and NSLA, Australian Public Libraries Statistical Report 2023-24.<span class="insight"> Queensland's 7.8 loans per person is about 20% above the national figure of 6.5.</span></figcaption>
+        <figcaption class="cap">Loans include physical and digital items. States collect data differently, so comparisons are indicative. Source: ALIA and NSLA, Australian Public Libraries Statistical Report 2023-24.<span class="insight"> Queensland's 7.8 loans per person is about 20% above the national figure of 6.5.</span></figcaption>
       </figure>
     </div>
   </section>
@@ -327,11 +327,11 @@
       <div class="grid2">
         <figure class="card">
           <div class="chart" id="vis">Loading...</div>
-          <figcaption class="cap">Grey councils have no figures in the bulletin. Source: Queensland Public Libraries Statistical Bulletin 2024-25.<span class="insight"> Only 8 of the 62 councils with figures borrow more than the Queensland average of 7.7 items per resident, so a few large councils pull the average up.</span></figcaption>
+          <figcaption class="cap">Source: Queensland Public Libraries Statistical Bulletin 2024-25.<span class="insight"> Only 8 of the 62 councils with figures borrow more than the Queensland average of 7.7 items per resident, so a few large councils pull the average up.</span></figcaption>
         </figure>
         <figure class="card">
           <div class="chart" id="vis7">Loading...</div>
-          <figcaption class="cap">Independent (larger) councils only. Source: Queensland Public Libraries Statistical Bulletin 2024-25.<span class="insight"> High borrowing is not only a feature of well-off areas: Gympie ranks third overall despite being in the most disadvantaged 30% of Australian council areas (SEIFA decile 3).</span></figcaption>
+          <figcaption class="cap">Source: Queensland Public Libraries Statistical Bulletin 2024-25.<span class="insight"> High borrowing is not only a feature of well-off areas: Gympie ranks third overall despite being in the most disadvantaged 30% of Australian council areas (SEIFA decile 3).</span></figcaption>
         </figure>
       </div>
       <div class="section-takeaway">Nine councils borrow fewer than two items per resident, while only 16 of the 62 reach six or more.</div>
@@ -376,7 +376,7 @@
       <figure class="fig" style="margin-top:20px">
         <figure class="card">
           <div class="chart" id="vis4">Loading...</div>
-          <figcaption class="cap">Borrowing groups are thirds of the 62 councils with figures. SEIFA describes areas, not individuals. Sources: State Library of Queensland (2024-25); ABS SEIFA 2021.<span class="insight"> Of the 23 councils in the most disadvantaged group (SEIFA deciles 1-3), 7 are in the top third for borrowing and 7 are in the bottom third.</span></figcaption>
+          <figcaption class="cap">SEIFA describes areas, not individuals. Sources: State Library of Queensland (2024-25); ABS SEIFA 2021.<span class="insight"> Of the 23 councils in the most disadvantaged group (SEIFA deciles 1-3), 7 are in the top third for borrowing and 7 are in the bottom third.</span></figcaption>
         </figure>
         <figcaption>Sources: State Library of Queensland (2024-25); ABS SEIFA 2021, Index of Relative Socio-economic Disadvantage. SEIFA describes areas, not individual residents.</figcaption>
       </figure>
@@ -409,16 +409,16 @@
       <div class="grid2">
         <figure class="card">
           <div class="chart" id="vis10">Loading...</div>
-          <figcaption class="cap">Councils with 100 or more sessions. "Adults and all ages" is the remainder, and blank cells count as zero. Source: Queensland Public Libraries Statistical Bulletin 2024-25.<span class="insight"> Programs for ages 0-5 are the largest single audience in 22 of the 52 councils shown.</span></figcaption>
+          <figcaption class="cap">Source: Queensland Public Libraries Statistical Bulletin 2024-25.<span class="insight"> Programs for ages 0-5 are the largest single audience in 22 of the 52 councils shown.</span></figcaption>
         </figure>
         <div class="stack">
           <figure class="card">
             <div class="chart" id="vis8">Loading...</div>
-            <figcaption class="cap">National figures; shares use the report's six audience rows. Source: ALIA and NSLA 2023-24.<span class="insight"> Adult programs are the reverse of early childhood: about 26% of sessions but only 16% of attendance.</span></figcaption>
+            <figcaption class="cap">Source: ALIA and NSLA 2023-24.<span class="insight"> Adult programs are the reverse of early childhood: about 26% of sessions but only 16% of attendance.</span></figcaption>
           </figure>
           <figure class="card">
             <div class="chart" id="vis3">Loading...</div>
-            <figcaption class="cap">Calculated from the report's rounded per-person figures, so changes are approximate. Source: ALIA and NSLA 2023-24.<span class="insight"> The growth in collections is mostly digital: digital items rose from about 12% to 28% of all holdings since 2019-20.</span></figcaption>
+            <figcaption class="cap">Source: ALIA and NSLA 2023-24.<span class="insight"> The growth in collections is mostly digital: digital items rose from about 12% to 28% of all holdings since 2019-20.</span></figcaption>
           </figure>
         </div>
       </div>
@@ -435,7 +435,6 @@
           <div class="chart" id="vis11">Loading...</div>
           <figcaption class="cap">Independent councils only, because rural councils do not report local contributions. Source: Queensland Public Libraries Statistical Bulletin 2024-25.<span class="insight"> The typical independent council contributes about $53 per resident, roughly ten times the $5.50 from State Library grants.</span></figcaption>
         </figure>
-        <figcaption>Source: Statistical Bulletin 2024-25, finance - income. Independent councils only (rural councils do not report local contributions). The typical council pays about $53 per resident against about $5.50 from the State Library.</figcaption>
       </figure>
     </div>
   </section>
@@ -639,7 +638,7 @@
     show('vis7', Object.assign({
       $schema: S,
       height: 460,
-      title: "Top 15 borrowing councils (larger councils)",
+      title: "Top 15 borrowing councils",
       data: LIB,
       transform: [
         { filter: "isValid(datum.usage_pc) && datum.svc == 'IND'" },
@@ -796,7 +795,7 @@
     show('vis9', Object.assign({
       $schema: S,
       height: 520,
-      title: "Each line is one council (the top 10 borrowers are highlighted)",
+      title: "Top borrowers excel in circulation, but lag in membership and visits",
       data: LIB,
       transform: [
         { filter: "isValid(datum.usage_pc) && isValid(datum.members_pct) && isValid(datum.visits_pc)" },
@@ -837,7 +836,7 @@
       height: { step: 13 },
       mark: "rect",
       encoding: {
-        x: { field: "group", type: "ordinal", title: null, sort: ["Ages 0-5", "Ages 6-12", "Ages 13-17", "Adults and all ages"], axis: { labelAngle: 0, labelLimit: 80, orient: "top" } },
+        x: { field: "group", type: "ordinal", title: null, sort: ["Ages 0-5", "Ages 6-12", "Ages 13-17", "Adults Onwards"], axis: { labelAngle: 0, labelLimit: 80, orient: "top" } },
         y: { field: "name", type: "nominal", title: null, sort: { field: "total", op: "max", order: "descending" }, axis: { labelFontSize: 10 } },
         color: { field: "share", type: "quantitative", title: "Share of sessions", scale: { range: [C.pale, C.dark] }, legend: { orient: "bottom", format: "%" } },
         tooltip: [
