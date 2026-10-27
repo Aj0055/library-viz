@@ -50,8 +50,15 @@
       margin: 0 auto;
     }
 
+    /* Base paragraph layout: comfortable reading length for section intros */
     .text {
-      max-width: 720px;
+      max-width: 850px;
+    }
+
+    /* Spreading layout for hero/transition banner blocks */
+    .text.wide, 
+    .chapter .text {
+      max-width: 1000px;
     }
 
     p {
@@ -69,14 +76,13 @@
       font: 600 clamp(2.4rem, 5vw, 3.9rem)/1.05 'Newsreader', Georgia, serif;
       letter-spacing: -.01em;
       margin: 0 0 18px;
-      max-width: 860px;
+      max-width: 950px;
     }
 
     .hero .lede {
       color: #cfe3e1;
       font-size: 1.2rem;
       margin: 0;
-      max-width: 700px;
     }
 
     .kpis {
@@ -286,7 +292,7 @@
   <header class="hero">
     <div class="wrap">
       <h1>Australian libraries: where they are and who they reach</h1>
-      <p class="lede text">More than 1,700 public library outlets serve Australians, from big city branches to small outback libraries. Do people use them equally everywhere? We start with the whole country, then take a closer look at Queensland.</p>
+      <p class="lede text wide">More than 1,700 public library outlets serve local communities across Australia—from major metropolitan branches to remote outback hubs. However, engagement varies sharply across regions, with Queensland leading national per-capita borrowing.</p>
       <div class="kpis">
         <div class="kpi"><b>1,717</b>library service points across Australia</div>
         <div class="kpi"><b>8.1 million</b>registered members</div>
@@ -317,7 +323,7 @@
   <section class="band b">
     <div class="wrap">
       <h2><span class="num">2</span><span>Queensland's borrowing divide</span></h2>
-      <p class="text">While Queenslanders average 7.7 loans per resident, total circulation is heavily concentrated in a handful of major coastal centers like the Gold Coast, leaving most regional councils below average</p>
+      <p class="text">While Queenslanders average 7.7 loans per resident, total circulation is heavily concentrated in a handful of major coastal centers like the Gold Coast, leaving most regional councils below average.</p>
       <div class="grid2">
         <figure class="card">
           <div class="chart" id="vis">Loading...</div>
@@ -381,7 +387,7 @@
   <section class="band a">
     <div class="wrap">
       <h2><span class="num">5</span><span>Do the measures move together?</span></h2>
-      <p class="text"> Do high borrowing rates translate across all performance metrics? Comparing council ranks across membership, visits, borrowing, and advantage reveals surprising disconnects.</p>
+      <p class="text">Do high borrowing rates translate across all performance metrics? Comparing council ranks across membership, visits, borrowing, and advantage reveals surprising disconnects.</p>
       <div class="stack" style="margin-top:20px">
         <figure class="card">
           <div class="chart" id="vis6">Loading...</div>
