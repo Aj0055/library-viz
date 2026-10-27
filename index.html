@@ -1,232 +1,940 @@
 <!DOCTYPE html>
 <html lang="en-AU">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Australian libraries: where they are and who they reach</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
-<script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
-<script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
-<style>
-:root{--ink:#1c2b2e;--muted:#566668;--teal:#1f5559;--mid:#46888b;--line:#d3ddd8}
-*{box-sizing:border-box}
-body{margin:0;color:var(--ink);font:17px/1.65 'Inter',Arial,sans-serif;background:#f4f7f5}
-.band{padding:64px 24px}
-.band.a{background:#f4f7f5}
-.band.b{background:#e6efeb}
-.wrap{max-width:1100px;margin:0 auto}
-.text{max-width:720px}
-p{margin:0 0 16px}
-.hero{background:repeating-linear-gradient(90deg,rgba(255,255,255,.035) 0 2px,transparent 2px 16px),linear-gradient(135deg,#102f32 0%,#1f5559 55%,#2f7276 100%);color:#fff;padding:84px 24px 0}
-.hero h1{font:600 clamp(2.4rem,5vw,3.9rem)/1.05 'Newsreader',Georgia,serif;letter-spacing:-.01em;margin:0 0 18px;max-width:860px}
-.hero .lede{color:#cfe3e1;font-size:1.2rem;margin:0;max-width:700px}
-.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:48px;transform:translateY(44px)}
-.kpi{background:#fff;color:var(--muted);border-radius:10px;border-top:4px solid var(--mid);padding:18px 20px;font-size:14px;line-height:1.4;box-shadow:0 10px 28px rgba(16,47,50,.2)}
-.kpi b{display:block;font:600 2.1rem/1.1 'Newsreader',Georgia,serif;color:var(--teal);margin-bottom:4px}
-.after-hero{padding-top:116px}
-h2{display:flex;align-items:center;gap:14px;font:600 clamp(1.6rem,3vw,2.1rem)/1.2 'Newsreader',Georgia,serif;margin:0 0 14px}
-h2 .num{flex:none;width:36px;height:36px;border-radius:50%;background:var(--teal);color:#fff;font:600 15px 'Inter',Arial,sans-serif;display:inline-flex;align-items:center;justify-content:center}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:24px;align-items:stretch}
-.grid2 .card,.stack .card{margin:0}
-.stack{display:grid;gap:24px;align-content:start}
-.card{margin:24px 0 0;display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;min-width:0;box-shadow:0 2px 4px rgba(16,47,50,.04),0 10px 28px rgba(16,47,50,.07)}
-.chart{flex:1;width:100%;margin:0;padding:0;overflow-x:auto}
-.cap{font:13px/1.55 'Inter',Arial,sans-serif;color:var(--muted);padding:12px 16px 14px;border-top:1px solid #e6ece9;background:#fafcfb}
-.cap .insight{display:block;margin-top:8px;padding-left:10px;border-left:3px solid var(--mid);color:var(--teal);font-weight:600}
-.section-takeaway{margin:24px 0 0;padding:14px 20px;background:linear-gradient(90deg,#dcebe8,#fff 65%);border:1px solid var(--line);border-left:5px solid var(--teal);border-radius:0 10px 10px 0;font:15px/1.6 'Inter',Arial,sans-serif;color:#243538}
-.key{display:flex;gap:14px;align-items:center;font:14px 'Inter',Arial,sans-serif;margin:8px 0 0}
-.key .rows{text-align:right;display:flex;flex-direction:column;justify-content:space-between;height:126px}
-.key .grid{display:grid;grid-template-columns:repeat(3,40px);gap:2px}
-.key .grid i{display:block;height:40px}
-.key .cols{display:flex;justify-content:space-between;gap:20px;margin-top:4px;white-space:nowrap}
-.err{color:#b00020;font:14px Arial,sans-serif;padding:16px}
-.vega-embed{display:block!important;width:100%}
-footer.band{background:#102f32;color:#cfe3e1;font:14px/1.7 'Inter',Arial,sans-serif}
-footer.band strong{color:#fff}
-.chapter{background:linear-gradient(135deg,#102f32,#1f5559);color:#fff;padding:56px 24px}
-.chapter h2{color:#fff}
-.chapter .text{color:#cfe3e1;font-size:1.15rem}
-@media(max-width:900px){.grid2{grid-template-columns:1fr}.kpis{grid-template-columns:1fr 1fr}.hero{padding-top:56px}}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Australian libraries: where they are and who they reach</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet">
+  
+  <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+  
+  <style>
+    :root {
+      --ink: #1c2b2e;
+      --muted: #566668;
+      --teal: #1f5559;
+      --mid: #46888b;
+      --line: #d3ddd8;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      font: 17px/1.65 'Inter', Arial, sans-serif;
+      background: #f4f7f5;
+    }
+
+    .band {
+      padding: 64px 24px;
+    }
+
+    .band.a {
+      background: #f4f7f5;
+    }
+
+    .band.b {
+      background: #e6efeb;
+    }
+
+    .wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .text {
+      max-width: 720px;
+    }
+
+    p {
+      margin: 0 0 16px;
+    }
+
+    .hero {
+      background: repeating-linear-gradient(90deg, rgba(255, 255, 255, .035) 0 2px, transparent 2px 16px),
+                  linear-gradient(135deg, #102f32 0%, #1f5559 55%, #2f7276 100%);
+      color: #fff;
+      padding: 84px 24px 0;
+    }
+
+    .hero h1 {
+      font: 600 clamp(2.4rem, 5vw, 3.9rem)/1.05 'Newsreader', Georgia, serif;
+      letter-spacing: -.01em;
+      margin: 0 0 18px;
+      max-width: 860px;
+    }
+
+    .hero .lede {
+      color: #cfe3e1;
+      font-size: 1.2rem;
+      margin: 0;
+      max-width: 700px;
+    }
+
+    .kpis {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-top: 48px;
+      transform: translateY(44px);
+    }
+
+    .kpi {
+      background: #fff;
+      color: var(--muted);
+      border-radius: 10px;
+      border-top: 4px solid var(--mid);
+      padding: 18px 20px;
+      font-size: 14px;
+      line-height: 1.4;
+      box-shadow: 0 10px 28px rgba(16, 47, 50, .2);
+    }
+
+    .kpi b {
+      display: block;
+      font: 600 2.1rem/1.1 'Newsreader', Georgia, serif;
+      color: var(--teal);
+      margin-bottom: 4px;
+    }
+
+    .after-hero {
+      padding-top: 116px;
+    }
+
+    h2 {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font: 600 clamp(1.6rem, 3vw, 2.1rem)/1.2 'Newsreader', Georgia, serif;
+      margin: 0 0 14px;
+    }
+
+    h2 .num {
+      flex: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--teal);
+      color: #fff;
+      font: 600 15px 'Inter', Arial, sans-serif;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .grid2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 24px;
+      align-items: stretch;
+    }
+
+    .grid2 .card,
+    .stack .card {
+      margin: 0;
+    }
+
+    .stack {
+      display: grid;
+      gap: 24px;
+      align-content: start;
+    }
+
+    .card {
+      margin: 24px 0 0;
+      display: flex;
+      flex-direction: column;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      overflow: hidden;
+      min-width: 0;
+      box-shadow: 0 2px 4px rgba(16, 47, 50, .04), 0 10px 28px rgba(16, 47, 50, .07);
+    }
+
+    .chart {
+      flex: 1;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      overflow-x: auto;
+    }
+
+    .cap {
+      font: 13px/1.55 'Inter', Arial, sans-serif;
+      color: var(--muted);
+      padding: 12px 16px 14px;
+      border-top: 1px solid #e6ece9;
+      background: #fafcfb;
+    }
+
+    .cap .insight {
+      display: block;
+      margin-top: 8px;
+      padding-left: 10px;
+      border-left: 3px solid var(--mid);
+      color: var(--teal);
+      font-weight: 600;
+    }
+
+    .section-takeaway {
+      margin: 24px 0 0;
+      padding: 14px 20px;
+      background: linear-gradient(90deg, #dcebe8, #fff 65%);
+      border: 1px solid var(--line);
+      border-left: 5px solid var(--teal);
+      border-radius: 0 10px 10px 0;
+      font: 15px/1.6 'Inter', Arial, sans-serif;
+      color: #243538;
+    }
+
+    .key {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      font: 14px 'Inter', Arial, sans-serif;
+      margin: 8px 0 0;
+    }
+
+    .key .rows {
+      text-align: right;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 126px;
+    }
+
+    .key .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 40px);
+      gap: 2px;
+    }
+
+    .key .grid i {
+      display: block;
+      height: 40px;
+    }
+
+    .key .cols {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      margin-top: 4px;
+      white-space: nowrap;
+    }
+
+    .err {
+      color: #b00020;
+      font: 14px Arial, sans-serif;
+      padding: 16px;
+    }
+
+    .vega-embed {
+      display: block !important;
+      width: 100%;
+    }
+
+    footer.band {
+      background: #102f32;
+      color: #cfe3e1;
+      font: 14px/1.7 'Inter', Arial, sans-serif;
+    }
+
+    footer.band strong {
+      color: #fff;
+    }
+
+    .chapter {
+      background: linear-gradient(135deg, #102f32, #1f5559);
+      color: #fff;
+      padding: 56px 24px;
+    }
+
+    .chapter h2 {
+      color: #fff;
+    }
+
+    .chapter .text {
+      color: #cfe3e1;
+      font-size: 1.15rem;
+    }
+
+    @media (max-width: 900px) {
+      .grid2 {
+        grid-template-columns: 1fr;
+      }
+      .kpis {
+        grid-template-columns: 1fr 1fr;
+      }
+      .hero {
+        padding-top: 56px;
+      }
+    }
+  </style>
 </head>
 <body>
-<header class="hero"><div class="wrap"><h1>Australian libraries: where they are and who they reach</h1>
-<p class="lede text">More than 1,700 public library outlets serve Australians, from big city branches to small outback libraries. Do people use them equally everywhere? We start with the whole country, then take a closer look at Queensland.</p>
-<div class="kpis"><div class="kpi"><b>1,717</b>library service points across Australia</div><div class="kpi"><b>8.1 million</b>registered members</div><div class="kpi"><b>174 million</b>items borrowed in 2023-24</div><div class="kpi"><b>88 million</b>in-person visits</div></div>
-</div></header>
-<section class="band b after-hero"><div class="wrap"><h2><span class="num">1</span><span>Australia at a glance</span></h2><p class="text">Each state and territory runs its own library network, so the figures are not perfectly comparable. Even so, the national picture is clear: people borrow very different amounts depending on where they live.</p>
-<figure class="card"><div class="chart" id="vis0">Loading...</div><figcaption class="cap">Each tile is a state or territory, placed roughly where it sits on the map so that every state is the same size. Loans include physical and digital items. States collect data differently, so comparisons are indicative. Source: ALIA and NSLA, Australian Public Libraries Statistical Report 2023-24.<span class="insight"> Queensland's 7.8 loans per person is about 20% above the national figure of 6.5.</span></figcaption></figure></div></section>
-<section class="chapter"><div class="wrap"><h2>Taking a closer look at Queensland</h2><p class="text" style="margin:0">Queensland borrows the most per person of any state, and it publishes figures for each of its local councils. That lets us see how use differs inside one state, from the south-east coast to the outback.</p></div></section>
-<section class="band b"><div class="wrap"><h2><span class="num">2</span><span>Borrowing is far from even</span></h2><p class="text">In 2024-25 the average Queenslander borrowed 7.7 items from their council library. Gold Coast residents borrowed 12.3 each, while some remote councils borrowed fewer than one. Councils with no published figures are shown in grey.</p><div class="grid2"><figure class="card"><div class="chart" id="vis">Loading...</div><figcaption class="cap">Grey councils have no figures in the bulletin. Source: Queensland Public Libraries Statistical Bulletin 2024-25.<span class="insight"> Only 8 of the 62 councils with figures borrow more than the Queensland average of 7.7 items per resident, so a few large councils pull the average up.</span></figcaption></figure><figure class="card"><div class="chart" id="vis7">Loading...</div><figcaption class="cap">Independent (larger) councils only. Source: Queensland Public Libraries Statistical Bulletin 2024-25.<span class="insight"> High borrowing is not only a feature of well-off areas: Gympie ranks third overall despite being in the most disadvantaged 30% of Australian council areas (SEIFA decile 3).</span></figcaption></figure></div><div class="section-takeaway">Nine councils borrow fewer than two items per resident, while only 16 of the 62 reach six or more.</div></div></section>
-<section class="band a"><div class="wrap"><h2><span class="num">3</span><span>Busy doors, big and small</span></h2><p class="text">Visits tell a different story from loans. Brisbane recorded 5.4 million visits and the Gold Coast 2 million. Across Australia, in-person visits fell during the pandemic and have recovered to about 3.2 per person, while website visits have dropped.</p><div class="grid2"><figure class="card"><div class="chart" id="vis2">Loading...</div><figcaption class="cap">Circles sit at each council's centre and count physical visits only. Source: Queensland Public Libraries Statistical Bulletin 2024-25.<span class="insight"> Brisbane, Gold Coast, Moreton Bay, Logan and Sunshine Coast together account for 63% of the visits recorded in the bulletin.</span></figcaption></figure><figure class="card"><div class="chart" id="vis5">Loading...</div><figcaption class="cap">National per-person averages for Australia. Source: ALIA and NSLA, Australian Public Libraries Statistical Report 2023-24.<span class="insight"> Website visits peaked at 2.7 per person in 2022-23 before falling to 2.2, while in-person visits kept rising.</span></figcaption></figure></div><div class="section-takeaway">Brisbane alone accounts for 32% of the visits recorded, about as much as the next four councils combined.</div></div></section>
-<section class="band b"><div class="wrap"><h2><span class="num">4</span><span>Does disadvantage change who borrows?</span></h2><p class="text">Colour shows two things at once: how much residents borrow (left to right) and how advantaged the area is (bottom to top), using the ABS SEIFA index. Hover over a council to see its figures.</p><div class="key"><div class="rows"><span>More advantaged</span><span>More disadvantaged</span></div><div><div class="grid" id="keygrid"></div><div class="cols"><span>Low borrowing</span><span>High borrowing</span></div></div></div><figure class="fig" style="margin-top:20px"><figure class="card"><div class="chart" id="vis4">Loading...</div><figcaption class="cap">Borrowing groups are thirds of the 62 councils with figures. SEIFA describes areas, not individuals. Sources: State Library of Queensland (2024-25); ABS SEIFA 2021.<span class="insight"> Of the 23 councils in the most disadvantaged group (SEIFA deciles 1-3), 7 are in the top third for borrowing and 7 are in the bottom third.</span></figcaption></figure><figcaption>Sources: State Library of Queensland (2024-25); ABS SEIFA 2021, Index of Relative Socio-economic Disadvantage. SEIFA describes areas, not individual residents.</figcaption></figure><div class="section-takeaway">At the other end, of the 9 most advantaged councils (SEIFA deciles 8-10), 5 are in the top third for borrowing and 3 are in the bottom third.</div></div></section>
-<section class="band a"><div class="wrap"><h2><span class="num">5</span><span>Do the measures move together?</span></h2><p class="text">Larger councils generally borrow more, but smaller rural councils vary widely. Below, each line is one council. The ten highest-borrowing councils are in teal and all the others are pale grey. Hover over a teal dot to highlight one council, and follow its line across to see whether it also ranks high on membership, visits and advantage.</p><div class="stack" style="margin-top:20px"><figure class="card"><div class="chart" id="vis6">Loading...</div><figcaption class="cap">Dots are spread up and down at random to avoid overlap; only the left-to-right position carries information. Source: Queensland Public Libraries Statistical Bulletin 2024-25.<span class="insight"> The typical (median) larger council borrows 5.5 items per resident, nearly double the 2.8 of smaller rural councils.</span></figcaption></figure><figure class="card"><div class="chart" id="vis9">Loading...</div><figcaption class="cap">Each axis shows a council's rank, not its value, so extreme values do not squash the chart. Sources: Queensland Public Libraries Statistical Bulletin 2024-25. ABS SEIFA 2021.<span class="insight"> Three of the top 10 borrowers (Gold Coast, Redland and Moreton Bay) have below-average membership rates, so high borrowing does not always mean high membership.</span></figcaption></figure></div><div class="section-takeaway">The top 10 borrowers span SEIFA deciles 3 to 9, and include one small rural council, Winton, with about 1,100 residents.</div></div></section>
-<section class="band b"><div class="wrap"><h2><span class="num">6</span><span>What libraries offer, and how that is changing</span></h2><p class="text">Council programs lean heavily towards young children. Early childhood programs are about 31% of all sessions Australia-wide but draw about 51% of everyone who attends. Compared with before COVID, Australians now borrow about 18% more items each, while website visits are down.</p><div class="grid2"><figure class="card"><div class="chart" id="vis10">Loading...</div><figcaption class="cap">Councils with 100 or more sessions. "Adults and all ages" is the remainder, and blank cells count as zero. Source: Queensland Public Libraries Statistical Bulletin 2024-25.<span class="insight"> Programs for ages 0-5 are the largest single audience in 22 of the 52 councils shown.</span></figcaption></figure><div class="stack"><figure class="card"><div class="chart" id="vis8">Loading...</div><figcaption class="cap">National figures; shares use the report's six audience rows. Source: ALIA and NSLA 2023-24.<span class="insight"> Adult programs are the reverse of early childhood: about 26% of sessions but only 16% of attendance.</span></figcaption></figure><figure class="card"><div class="chart" id="vis3">Loading...</div><figcaption class="cap">Calculated from the report's rounded per-person figures, so changes are approximate. Source: ALIA and NSLA 2023-24.<span class="insight"> The growth in collections is mostly digital: digital items rose from about 12% to 28% of all holdings since 2019-20.</span></figcaption></figure></div></div><div class="section-takeaway">Nationally, libraries ran a record 409,000 programs in 2023-24 for more than 7 million attendances.</div></div></section>
-<section class="band a"><div class="wrap"><h2><span class="num">7</span><span>Who pays for the library?</span></h2><p class="text">Most of the money comes from local councils, with State Library of Queensland grants adding a smaller amount per resident. The gap between the two varies a lot between councils.</p><figure class="fig" style="margin-top:20px"><figure class="card"><div class="chart" id="vis11">Loading...</div><figcaption class="cap">Independent councils only, because rural councils do not report local contributions. Source: Queensland Public Libraries Statistical Bulletin 2024-25.<span class="insight"> The typical independent council contributes about $53 per resident, roughly ten times the $5.50 from State Library grants.</span></figcaption></figure><figcaption>Source: Statistical Bulletin 2024-25, finance - income. Independent councils only (rural councils do not report local contributions). The typical council pays about $53 per resident against about $5.50 from the State Library.</figcaption></figure></div></section>
-<footer class="band"><div class="wrap">
-<p><strong>Author:</strong> Ajay Bellamkonda, FIT3179 Data Visualisation 2, Monash University. 15/10/2026.</p>
-<p><strong>Data:</strong> State Library of Queensland, <em>Queensland Public Libraries Statistical Bulletin 2024-25</em>; ALIA and NSLA, <em>Australian Public Libraries Statistical Report 2023-24</em>; Australian Bureau of Statistics, SEIFA 2021 and ASGS Edition 3 boundaries.</p>
-<p><strong>AI use:</strong> Claude (Anthropic) helped write the chart code and page text.</p>
-</div></footer>
 
-<script>
-const S = "https://vega.github.io/schema/vega-lite/v5.json";
-// One teal-and-slate palette used by every chart
-const C = {dark:"#1f5559", mid:"#46888b", light:"#b7d6d4", pale:"#e3efee", slate:"#7a8a99", violet:"#8c62aa", sky:"#5698b9", grey:"#e4e7e2", line:"#ffffff"};
-const CONFIG = {font:"Inter, Arial, sans-serif", background:null, view:{stroke:null},
-  title:{anchor:"start", font:"Newsreader, Georgia, serif", fontSize:17, fontWeight:"normal", color:"#1f2a2c", subtitleFont:"Inter, Arial, sans-serif"},
-  axis:{labelColor:"#444", titleColor:"#444", gridColor:"#e4e7e2", domainColor:"#999", tickColor:"#999"},
-  legend:{labelColor:"#444", titleColor:"#444"}};
-const fontsReady = document.fonts ? document.fonts.ready : Promise.resolve();
-const show = (id, s) => fontsReady.then(() => vegaEmbed('#' + id, s, {actions:false, config:CONFIG, renderer:'svg'})).catch(e => {
-  const el = document.getElementById(id); el.className = 'chart err'; el.textContent = 'Error in ' + id + ': ' + e.message;
-});
-const PAD = {"left":16, "right":32, "top":14, "bottom":14};
-const FIT = {"width":"container", "autosize":{"type":"fit-x", "contains":"padding"}, "padding":PAD};
-const LIB = {"url":"data/library_stats.csv", "format":{"type":"csv", "parse":{"usage_pc":"number", "members_pct":"number", "visits_pc":"number", "irsd_score":"number", "pop":"number"}}};
-const P = {"type":"conicEqualArea", "parallels":[-12,-28], "rotate":[-145,0]};
-const TOPO = {"url":"data/qld_lga.topojson", "format":{"type":"topojson", "feature":"qld_lga"}};
-const STATS = (fields, parse) => ({"lookup":"properties.code", "from":{
-  "data":{"url":"data/library_stats.csv", "format":{"type":"csv", "parse":Object.assign({"lga_code_2021":"string"}, parse || {})}},
-  "key":"lga_code_2021", "fields":fields}});
-const BASE = {"data":TOPO, "mark":{"type":"geoshape", "fill":"#e9ebe7", "stroke":"#ffffff", "strokeWidth":0.4}, "encoding":{"tooltip":[{"field":"properties.name", "type":"nominal", "title":"Council (no figures published)"}]}};
-const MEAS = {"domain":["Items borrowed","Library visits (in person)","Website visits","Items in collection"], "range":[C.dark, C.sky, C.violet, C.slate]};
-// Bivariate palette: first digit = borrowing (teal), second digit = advantage (slate-blue)
-const cols = {"00":"#e8e8e8","10":"#ace4e4","20":"#5ac8c8","01":"#dfb0d6","11":"#a5add3","21":"#5698b9","02":"#be64ac","12":"#8c62aa","22":"#3b4994"};
-document.getElementById('keygrid').innerHTML = ["02","12","22","01","11","21","00","10","20"].map(k => `<i style="background:${cols[k]}"></i>`).join('');
+  <header class="hero">
+    <div class="wrap">
+      <h1>Australian libraries: where they are and who they reach</h1>
+      <p class="lede text">More than 1,700 public library outlets serve Australians, from big city branches to small outback libraries. Do people use them equally everywhere? We start with the whole country, then take a closer look at Queensland.</p>
+      <div class="kpis">
+        <div class="kpi"><b>1,717</b>library service points across Australia</div>
+        <div class="kpi"><b>8.1 million</b>registered members</div>
+        <div class="kpi"><b>174 million</b>items borrowed in 2023-24</div>
+        <div class="kpi"><b>88 million</b>in-person visits</div>
+      </div>
+    </div>
+  </header>
 
-// Map 1: choropleth
-show('vis', Object.assign({"$schema":S, "height":460, "projection":P, "title":"Loans per resident, 2024-25",
- "layer":[BASE,
-  {"data":TOPO, "transform":[STATS(["name","usage_pc","members_pct"]), {"filter":"isValid(datum.usage_pc)"}],
-   "mark":{"type":"geoshape", "stroke":"white"},
-   "encoding":{"color":{"field":"usage_pc", "type":"quantitative", "title":"Loans per resident",
-     "scale":{"type":"threshold", "domain":[2,4,6,8], "range":[C.pale, C.light, "#7fb3b2", C.mid, C.dark]}, "legend":{"orient":"bottom", "direction":"horizontal"}},
-    "tooltip":[{"field":"name", "title":"Council"}, {"field":"usage_pc", "type":"quantitative", "title":"Loans per resident"}, {"field":"members_pct", "type":"quantitative", "title":"Members % of population"}]}}]}, FIT));
+  <section class="band b after-hero">
+    <div class="wrap">
+      <h2><span class="num">1</span><span>Australia at a glance</span></h2>
+      <p class="text">Each state and territory runs its own library network, so the figures are not perfectly comparable. Even so, the national picture is clear: people borrow very different amounts depending on where they live.</p>
+      <figure class="card">
+        <div class="chart" id="vis0">Loading...</div>
+        <figcaption class="cap">Each tile is a state or territory, placed roughly where it sits on the map so that every state is the same size. Loans include physical and digital items. States collect data differently, so comparisons are indicative. Source: ALIA and NSLA, Australian Public Libraries Statistical Report 2023-24.<span class="insight"> Queensland's 7.8 loans per person is about 20% above the national figure of 6.5.</span></figcaption>
+      </figure>
+    </div>
+  </section>
 
-// Map 2: proportional symbols
-show('vis2', Object.assign({"$schema":S, "height":460, "projection":P, "title":"Physical library visits, 2024-25",
- "layer":[Object.assign({}, BASE, {"mark":{"type":"geoshape", "fill":C.grey, "stroke":"white", "strokeWidth":0.5}}),
-  {"data":TOPO, "transform":[STATS(["name","visits"]), {"filter":"isValid(datum.visits) && datum.visits > 0"}, {"calculate":"geoCentroid(null, datum)", "as":"centroid"}],
-   "mark":{"type":"circle", "color":C.dark, "opacity":0.6, "stroke":"#0d2b2d", "strokeWidth":0.5},
-   "encoding":{"longitude":{"field":"centroid[0]", "type":"quantitative"}, "latitude":{"field":"centroid[1]", "type":"quantitative"},
-    "size":{"field":"visits", "type":"quantitative", "title":"Total annual visits", "scale":{"type":"sqrt", "range":[10,800]}, "legend":{"orient":"bottom", "direction":"horizontal"}},
-    "tooltip":[{"field":"name", "title":"Council"}, {"field":"visits", "type":"quantitative", "title":"Visits", "format":","}]}}]}, FIT));
+  <section class="chapter">
+    <div class="wrap">
+      <h2>Taking a closer look at Queensland</h2>
+      <p class="text" style="margin:0">Queensland borrows the most per person of any state, and it publishes figures for each of its local councils. That lets us see how use differs inside one state, from the south-east coast to the outback.</p>
+    </div>
+  </section>
 
-// Map 3: bivariate
-show('vis4', Object.assign({"$schema":S, "height":560, "projection":P, "title":"Library use and disadvantage together",
- "layer":[BASE,
-  {"data":TOPO, "transform":[STATS(["name","usage_pc","irsd_decile","bi"], {"bi":"string"}), {"filter":"isValid(datum.bi)"}],
-   "mark":{"type":"geoshape", "stroke":"white"},
-   "encoding":{"color":{"field":"bi", "type":"nominal", "legend":null, "scale":{"domain":Object.keys(cols), "range":Object.values(cols)}},
-    "tooltip":[{"field":"name", "title":"Council"}, {"field":"usage_pc", "type":"quantitative", "title":"Loans per resident"}, {"field":"irsd_decile", "type":"quantitative", "title":"Disadvantage decile (1 = most disadvantaged)"}]}}]}, FIT));
+  <section class="band b">
+    <div class="wrap">
+      <h2><span class="num">2</span><span>Borrowing is far from even</span></h2>
+      <p class="text">In 2024-25 the average Queenslander borrowed 7.7 items from their council library. Gold Coast residents borrowed 12.3 each, while some remote councils borrowed fewer than one. Councils with no published figures are shown in grey.</p>
+      <div class="grid2">
+        <figure class="card">
+          <div class="chart" id="vis">Loading...</div>
+          <figcaption class="cap">Grey councils have no figures in the bulletin. Source: Queensland Public Libraries Statistical Bulletin 2024-25.<span class="insight"> Only 8 of the 62 councils with figures borrow more than the Queensland average of 7.7 items per resident, so a few large councils pull the average up.</span></figcaption>
+        </figure>
+        <figure class="card">
+          <div class="chart" id="vis7">Loading...</div>
+          <figcaption class="cap">Independent (larger) councils only. Source: Queensland Public Libraries Statistical Bulletin 2024-25.<span class="insight"> High borrowing is not only a feature of well-off areas: Gympie ranks third overall despite being in the most disadvantaged 30% of Australian council areas (SEIFA decile 3).</span></figcaption>
+        </figure>
+      </div>
+      <div class="section-takeaway">Nine councils borrow fewer than two items per resident, while only 16 of the 62 reach six or more.</div>
+    </div>
+  </section>
 
-// Lollipop
-show('vis7', Object.assign({"$schema":S, "height":460, "title":"Top 15 borrowing councils (larger councils)", "data":LIB,
- "transform":[{"filter":"isValid(datum.usage_pc) && datum.svc == 'IND'"},
-  {"window":[{"op":"rank", "as":"rank"}], "sort":[{"field":"usage_pc", "order":"descending"}]}, {"filter":"datum.rank <= 15"}],
- "encoding":{"y":{"field":"name", "type":"nominal", "sort":"-x", "title":null}, "x":{"field":"usage_pc", "type":"quantitative", "title":"Items borrowed per resident"}},
- "layer":[{"mark":{"type":"rule", "color":C.light, "strokeWidth":2}, "encoding":{"x2":{"datum":0}}},
-  {"mark":{"type":"circle", "size":120, "color":C.dark}, "encoding":{"tooltip":[{"field":"name", "title":"Council"}, {"field":"usage_pc", "title":"Loans per resident"}]}}]}, FIT));
+  <section class="band a">
+    <div class="wrap">
+      <h2><span class="num">3</span><span>Busy doors, big and small</span></h2>
+      <p class="text">Visits tell a different story from loans. Brisbane recorded 5.4 million visits and the Gold Coast 2 million. Across Australia, in-person visits fell during the pandemic and have recovered to about 3.2 per person, while website visits have dropped.</p>
+      <div class="grid2">
+        <figure class="card">
+          <div class="chart" id="vis2">Loading...</div>
+          <figcaption class="cap">Circles sit at each council's centre and count physical visits only. Source: Queensland Public Libraries Statistical Bulletin 2024-25.<span class="insight"> Brisbane, Gold Coast, Moreton Bay, Logan and Sunshine Coast together account for 63% of the visits recorded in the bulletin.</span></figcaption>
+        </figure>
+        <figure class="card">
+          <div class="chart" id="vis5">Loading...</div>
+          <figcaption class="cap">National per-person averages for Australia. Source: ALIA and NSLA, Australian Public Libraries Statistical Report 2023-24.<span class="insight"> Website visits peaked at 2.7 per person in 2022-23 before falling to 2.2, while in-person visits kept rising.</span></figcaption>
+        </figure>
+      </div>
+      <div class="section-takeaway">Brisbane alone accounts for 32% of the visits recorded, about as much as the next four councils combined.</div>
+    </div>
+  </section>
 
-// Jitter
-show('vis6', Object.assign({"$schema":S, "height":300, "title":"Loans per resident, council by council", "data":LIB,
- "transform":[{"filter":"isValid(datum.usage_pc)"},
-  {"calculate":"datum.svc == 'IND' ? 'Larger councils (independent)' : 'Smaller rural councils'", "as":"group"}, {"calculate":"random()", "as":"jitter"}],
- "mark":{"type":"circle", "size":70, "opacity":0.75},
- "encoding":{"x":{"field":"usage_pc", "type":"quantitative", "title":"Items borrowed per resident, 2024-25"},
-  "y":{"field":"group", "type":"nominal", "title":null}, "yOffset":{"field":"jitter", "type":"quantitative"},
-  "color":{"field":"group", "type":"nominal", "legend":null, "scale":{"range":[C.dark, C.violet]}},
-  "tooltip":[{"field":"name", "title":"Council"}, {"field":"usage_pc", "title":"Loans per resident"}]}}, FIT));
+  <section class="band b">
+    <div class="wrap">
+      <h2><span class="num">4</span><span>Does disadvantage change who borrows?</span></h2>
+      <p class="text">Colour shows two things at once: how much residents borrow (left to right) and how advantaged the area is (bottom to top), using the ABS SEIFA index. Hover over a council to see its figures.</p>
+      <div class="key">
+        <div class="rows">
+          <span>More advantaged</span>
+          <span>More disadvantaged</span>
+        </div>
+        <div>
+          <div class="grid" id="keygrid"></div>
+          <div class="cols">
+            <span>Low borrowing</span>
+            <span>High borrowing</span>
+          </div>
+        </div>
+      </div>
+      <figure class="fig" style="margin-top:20px">
+        <figure class="card">
+          <div class="chart" id="vis4">Loading...</div>
+          <figcaption class="cap">Borrowing groups are thirds of the 62 councils with figures. SEIFA describes areas, not individuals. Sources: State Library of Queensland (2024-25); ABS SEIFA 2021.<span class="insight"> Of the 23 councils in the most disadvantaged group (SEIFA deciles 1-3), 7 are in the top third for borrowing and 7 are in the bottom third.</span></figcaption>
+        </figure>
+        <figcaption>Sources: State Library of Queensland (2024-25); ABS SEIFA 2021, Index of Relative Socio-economic Disadvantage. SEIFA describes areas, not individual residents.</figcaption>
+      </figure>
+      <div class="section-takeaway">At the other end, of the 9 most advantaged councils (SEIFA deciles 8-10), 5 are in the top third for borrowing and 3 are in the bottom third.</div>
+    </div>
+  </section>
 
-// Butterfly (concat charts cannot use container width, so fixed widths sized to fit the page)
-const ages = ["Early childhood","Children","Young adult","Adults","Seniors","All ages"];
-show('vis8', {"$schema":S, "padding":PAD, "title":"Who programs are for, and who turns up (Australia, 2023-24)", "data":{"url":"data/program_age.csv"},
- "transform":[{"joinaggregate":[{"op":"sum", "field":"sessions", "as":"ts"}, {"op":"sum", "field":"participants", "as":"tp"}]},
-  {"calculate":"datum.sessions / datum.ts", "as":"s_share"}, {"calculate":"datum.participants / datum.tp", "as":"p_share"}],
- "hconcat":[
-  {"width":170, "height":300, "mark":{"type":"bar", "color":C.violet}, "encoding":{"y":{"field":"age", "type":"ordinal", "sort":ages, "axis":null},
-    "tooltip":[{"field":"age", "type":"nominal", "title":"Audience"}, {"field":"sessions", "type":"quantitative", "title":"Sessions", "format":","}, {"field":"s_share", "type":"quantitative", "title":"Share of sessions", "format":".0%"}, {"field":"participants", "type":"quantitative", "title":"Attendances", "format":","}, {"field":"p_share", "type":"quantitative", "title":"Share of attendance", "format":".0%"}],
-    "x":{"field":"s_share", "type":"quantitative", "scale":{"reverse":true, "domain":[0,0.55]}, "axis":{"format":"%"}, "title":"Share of sessions"}}},
-  {"width":170, "height":300, "mark":{"type":"bar", "color":C.dark}, "encoding":{"y":{"field":"age", "type":"ordinal", "sort":ages, "title":null, "axis":{"orient":"left", "labelPadding":8}},
-    "tooltip":[{"field":"age", "type":"nominal", "title":"Audience"}, {"field":"sessions", "type":"quantitative", "title":"Sessions", "format":","}, {"field":"s_share", "type":"quantitative", "title":"Share of sessions", "format":".0%"}, {"field":"participants", "type":"quantitative", "title":"Attendances", "format":","}, {"field":"p_share", "type":"quantitative", "title":"Share of attendance", "format":".0%"}],
-    "x":{"field":"p_share", "type":"quantitative", "scale":{"domain":[0,0.55]}, "axis":{"format":"%"}, "title":"Share of people attending"}}}]});
+  <section class="band a">
+    <div class="wrap">
+      <h2><span class="num">5</span><span>Do the measures move together?</span></h2>
+      <p class="text">Larger councils generally borrow more, but smaller rural councils vary widely. Below, each line is one council. The ten highest-borrowing councils are in teal and all the others are pale grey. Hover over a teal dot to highlight one council, and follow its line across to see whether it also ranks high on membership, visits and advantage.</p>
+      <div class="stack" style="margin-top:20px">
+        <figure class="card">
+          <div class="chart" id="vis6">Loading...</div>
+          <figcaption class="cap">Dots are spread up and down at random to avoid overlap; only the left-to-right position carries information. Source: Queensland Public Libraries Statistical Bulletin 2024-25.<span class="insight"> The typical (median) larger council borrows 5.5 items per resident, nearly double the 2.8 of smaller rural councils.</span></figcaption>
+        </figure>
+        <figure class="card">
+          <div class="chart" id="vis9">Loading...</div>
+          <figcaption class="cap">Each axis shows a council's rank, not its value, so extreme values do not squash the chart. Sources: Queensland Public Libraries Statistical Bulletin 2024-25. ABS SEIFA 2021.<span class="insight"> Three of the top 10 borrowers (Gold Coast, Redland and Moreton Bay) have below-average membership rates, so high borrowing does not always mean high membership.</span></figcaption>
+        </figure>
+      </div>
+      <div class="section-takeaway">The top 10 borrowers span SEIFA deciles 3 to 9, and include one small rural council, Winton, with about 1,100 residents.</div>
+    </div>
+  </section>
 
-// Line chart
-show('vis5', Object.assign({"$schema":S, "height":460, "title":"Australia: five years of library use, per person", "data":{"url":"data/national_per_person.csv"},
- "mark":{"type":"line", "point":true, "strokeWidth":2.5},
- "encoding":{"x":{"field":"year", "type":"ordinal", "title":null, "axis":{"labelAngle":0}}, "y":{"field":"per_person", "type":"quantitative", "title":"Per person, per year"},
-  "color":{"field":"measure", "type":"nominal", "title":null, "scale":MEAS, "legend":{"orient":"bottom"}},
-  "tooltip":[{"field":"measure", "type":"nominal", "title":"Measure"}, {"field":"year", "type":"ordinal", "title":"Year"}, {"field":"per_person", "type":"quantitative", "title":"Per person"}]}}, FIT));
+  <section class="band b">
+    <div class="wrap">
+      <h2><span class="num">6</span><span>What libraries offer, and how that is changing</span></h2>
+      <p class="text">Council programs lean heavily towards young children. Early childhood programs are about 31% of all sessions Australia-wide but draw about 51% of everyone who attends. Compared with before COVID, Australians now borrow about 18% more items each, while website visits are down.</p>
+      <div class="grid2">
+        <figure class="card">
+          <div class="chart" id="vis10">Loading...</div>
+          <figcaption class="cap">Councils with 100 or more sessions. "Adults and all ages" is the remainder, and blank cells count as zero. Source: Queensland Public Libraries Statistical Bulletin 2024-25.<span class="insight"> Programs for ages 0-5 are the largest single audience in 22 of the 52 councils shown.</span></figcaption>
+        </figure>
+        <div class="stack">
+          <figure class="card">
+            <div class="chart" id="vis8">Loading...</div>
+            <figcaption class="cap">National figures; shares use the report's six audience rows. Source: ALIA and NSLA 2023-24.<span class="insight"> Adult programs are the reverse of early childhood: about 26% of sessions but only 16% of attendance.</span></figcaption>
+          </figure>
+          <figure class="card">
+            <div class="chart" id="vis3">Loading...</div>
+            <figcaption class="cap">Calculated from the report's rounded per-person figures, so changes are approximate. Source: ALIA and NSLA 2023-24.<span class="insight"> The growth in collections is mostly digital: digital items rose from about 12% to 28% of all holdings since 2019-20.</span></figcaption>
+          </figure>
+        </div>
+      </div>
+      <div class="section-takeaway">Nationally, libraries ran a record 409,000 programs in 2023-24 for more than 7 million attendances.</div>
+    </div>
+  </section>
 
-// Change since before COVID (diverging lollipop)
-show('vis3', Object.assign({"$schema":S, "height":300, "title":"Change per person since 2019-20", "data":{"url":"data/national_per_person.csv"},
- "transform":[{"filter":"datum.year == '2019-20' || datum.year == '2023-24'"}, {"pivot":"year", "value":"per_person", "groupby":["measure"]},
-  {"calculate":"(datum['2023-24'] - datum['2019-20']) / datum['2019-20']", "as":"change"}],
- "encoding":{"y":{"field":"measure", "type":"nominal", "sort":"-x", "title":null, "axis":{"labelLimit":170}},
-  "x":{"field":"change", "type":"quantitative", "title":"Change from 2019-20 to 2023-24", "axis":{"format":"+%"}}},
- "layer":[{"mark":{"type":"rule", "strokeWidth":2, "color":"#b7d6d4"}, "encoding":{"x2":{"datum":0}}},
-  {"mark":{"type":"circle", "size":160}, "encoding":{"color":{"condition":{"test":"datum.change >= 0", "value":C.dark}, "value":C.violet},
-    "tooltip":[{"field":"measure"}, {"field":"change", "type":"quantitative", "format":"+.0%", "title":"Change"}]}},
-  {"mark":{"type":"text", "dy":-14, "fontSize":12}, "encoding":{"text":{"field":"change", "type":"quantitative", "format":"+.0%"}}}]}, FIT));
+  <section class="band a">
+    <div class="wrap">
+      <h2><span class="num">7</span><span>Who pays for the library?</span></h2>
+      <p class="text">Most of the money comes from local councils, with State Library of Queensland grants adding a smaller amount per resident. The gap between the two varies a lot between councils.</p>
+      <figure class="fig" style="margin-top:20px">
+        <figure class="card">
+          <div class="chart" id="vis11">Loading...</div>
+          <figcaption class="cap">Independent councils only, because rural councils do not report local contributions. Source: Queensland Public Libraries Statistical Bulletin 2024-25.<span class="insight"> The typical independent council contributes about $53 per resident, roughly ten times the $5.50 from State Library grants.</span></figcaption>
+        </figure>
+        <figcaption>Source: Statistical Bulletin 2024-25, finance - income. Independent councils only (rural councils do not report local contributions). The typical council pays about $53 per resident against about $5.50 from the State Library.</figcaption>
+      </figure>
+    </div>
+  </section>
 
-// Parallel coordinates: the 10 highest-borrowing councils in teal, all others pale grey
-const AX = ["Members % of residents","Visits per resident","Loans per resident","Advantage (SEIFA score)"];
-const PCX = {"field":"axis", "type":"ordinal", "sort":AX, "title":null, "axis":{"grid":true, "gridColor":"#9aa5a0", "labelAngle":0, "labelLimit":180, "labelFontSize":12, "labelPadding":8, "orient":"top"}};
-const PCY = {"field":"rank", "type":"quantitative", "title":"Rank among councils (low to high)", "axis":{"format":"%"}};
-const PCC = {"field":"group", "type":"nominal", "title":null, "scale":{"domain":["Top 10 borrowers","Other councils"], "range":[C.dark, "#b3bbb7"]}, "legend":{"orient":"bottom"}};
-const PCT = [{"field":"name", "title":"Council"}, {"field":"group", "title":"Group"}];
-show('vis9', Object.assign({"$schema":S, "height":520, "title":"Each line is one council (the top 10 borrowers are highlighted)", "data":LIB,
- "transform":[{"filter":"isValid(datum.usage_pc) && isValid(datum.members_pct) && isValid(datum.visits_pc)"},
-  {"window":[{"op":"rank", "as":"loanrank"}], "sort":[{"field":"usage_pc", "order":"descending"}]},
-  {"calculate":"datum.loanrank <= 10 ? 'Top 10 borrowers' : 'Other councils'", "as":"group"},
-  {"fold":["members_pct","visits_pc","usage_pc","irsd_score"], "as":["key","value"]},
-  {"window":[{"op":"percent_rank", "as":"rank"}], "groupby":["key"], "sort":[{"field":"value"}]},
-  {"calculate":"datum.key=='members_pct' ? 'Members % of residents' : datum.key=='visits_pc' ? 'Visits per resident' : datum.key=='usage_pc' ? 'Loans per resident' : 'Advantage (SEIFA score)'", "as":"axis"}],
- "layer":[
-  {"transform":[{"filter":"datum.group == 'Other councils'"}],
-   "mark":{"type":"line", "point":{"filled":true, "size":16}, "opacity":0.45, "strokeWidth":0.9},
-   "encoding":{"x":PCX, "y":PCY, "detail":{"field":"name"}, "color":PCC, "tooltip":PCT}},
-  {"transform":[{"filter":"datum.group == 'Top 10 borrowers'"}],
-   "params":[{"name":"hov", "select":{"type":"point", "on":"mouseover", "fields":["name"], "clear":"mouseout"}}],
-   "mark":{"type":"line", "point":{"filled":true, "size":50}},
-   "encoding":{"x":PCX, "y":PCY, "detail":{"field":"name"}, "color":PCC, "tooltip":PCT,
-    "opacity":{"condition":[{"param":"hov", "empty":false, "value":1}, {"test":"length(data('hov_store')) > 0", "value":0.25}], "value":0.9},
-    "strokeWidth":{"condition":{"param":"hov", "empty":false, "value":4}, "value":2.4}}}]}, FIT));
+  <footer class="band">
+    <div class="wrap">
+      <p><strong>Author:</strong> Ajay Bellamkonda, FIT3179 Data Visualisation 2, Monash University. 15/10/2026.</p>
+      <p><strong>Data:</strong> State Library of Queensland, <em>Queensland Public Libraries Statistical Bulletin 2024-25</em>; ALIA and NSLA, <em>Australian Public Libraries Statistical Report 2023-24</em>; Australian Bureau of Statistics, SEIFA 2021 and ASGS Edition 3 boundaries.</p>
+      <p><strong>AI use:</strong> Claude (Anthropic) helped write the chart code and page text.</p>
+    </div>
+  </footer>
 
-// Heatmap: share of each council's program sessions by audience
-show('vis10', Object.assign({"$schema":S, "title":"Who each council's programs are for", "data":{"url":"data/programs_age.csv"}, "height":{"step":13},
- "mark":"rect",
- "encoding":{"x":{"field":"group", "type":"ordinal", "title":null, "sort":["Ages 0-5","Ages 6-12","Ages 13-17","Adults and all ages"], "axis":{"labelAngle":0, "labelLimit":80, "orient":"top"}},
-  "y":{"field":"name", "type":"nominal", "title":null, "sort":{"field":"total", "op":"max", "order":"descending"}, "axis":{"labelFontSize":10}},
-  "color":{"field":"share", "type":"quantitative", "title":"Share of sessions", "scale":{"range":[C.pale, C.dark]}, "legend":{"orient":"bottom", "format":"%"}},
-  "tooltip":[{"field":"name", "title":"Council"}, {"field":"total", "title":"Sessions in 2024-25", "format":","}, {"field":"group", "title":"Audience"}, {"field":"share", "title":"Share", "format":".0%"}]}}, FIT));
+  <script>
+    const S = "https://vega.github.io/schema/vega-lite/v5.json";
+    
+    // One teal-and-slate palette used by every chart
+    const C = {
+      dark: "#1f5559",
+      mid: "#46888b",
+      light: "#b7d6d4",
+      pale: "#e3efee",
+      slate: "#7a8a99",
+      violet: "#8c62aa",
+      sky: "#5698b9",
+      grey: "#e4e7e2",
+      line: "#ffffff"
+    };
 
-// Dumbbell: who pays, per resident
-show('vis11', Object.assign({"$schema":S, "title":"Funding per resident, independent councils (2024-25)", "data":{"url":"data/funding.csv"}, "height":{"step":18},
- "transform":[{"fold":["local_pc","state_pc"], "as":["source","value"]}, {"calculate":"datum.source == 'local_pc' ? 'Local council' : 'State Library of Queensland'", "as":"payer"}],
- "encoding":{"y":{"field":"name", "type":"nominal", "title":null, "sort":{"field":"local_pc", "op":"max", "order":"descending"}},
-  "x":{"field":"value", "type":"quantitative", "title":"Dollars per resident", "axis":{"format":"$.0f"}}},
- "layer":[{"mark":{"type":"line", "color":"#b7d6d4", "strokeWidth":3}, "encoding":{"detail":{"field":"name"}}},
-  {"mark":{"type":"circle", "size":110, "opacity":1}, "encoding":{"color":{"field":"payer", "type":"nominal", "title":null, "scale":{"domain":["Local council","State Library of Queensland"], "range":[C.dark, C.violet]}, "legend":{"orient":"top"}},
-   "tooltip":[{"field":"name", "title":"Council"}, {"field":"payer", "title":"Source"}, {"field":"value", "title":"Per resident", "format":"$.2f"}]}}]}, FIT));
+    const CONFIG = {
+      font: "Inter, Arial, sans-serif",
+      background: null,
+      view: { stroke: null },
+      title: {
+        anchor: "start",
+        font: "Newsreader, Georgia, serif",
+        fontSize: 17,
+        fontWeight: "normal",
+        color: "#1f2a2c",
+        subtitleFont: "Inter, Arial, sans-serif"
+      },
+      axis: {
+        labelColor: "#444",
+        titleColor: "#444",
+        gridColor: "#e4e7e2",
+        domainColor: "#999",
+        tickColor: "#999"
+      },
+      legend: {
+        labelColor: "#444",
+        titleColor: "#444"
+      }
+    };
 
-// Australia: tile-grid map of loans per person by state and territory
-const TILES = [{"code":"NT","col":1,"row":0,"loans":3.7},{"code":"QLD","col":2,"row":0,"loans":7.8},{"code":"WA","col":0,"row":1,"loans":5.5},{"code":"SA","col":1,"row":1,"loans":7.1},{"code":"NSW","col":2,"row":1,"loans":6.0},{"code":"ACT","col":3,"row":1,"loans":5.5},{"code":"VIC","col":2,"row":2,"loans":6.6},{"code":"TAS","col":2,"row":3,"loans":5.8}];
-const TX = {"field":"col", "type":"ordinal", "axis":null, "scale":{"paddingInner":0.06, "paddingOuter":0.1}};
-const TY = {"field":"row", "type":"ordinal", "axis":null, "scale":{"paddingInner":0.06, "paddingOuter":0.1}};
-const TT = [{"field":"code", "title":"State or territory"}, {"field":"loans", "type":"quantitative", "title":"Loans per person"}];
-show('vis0', Object.assign({"$schema":S, "height":420, "title":"Loans per person by state and territory, 2023-24", "data":{"values":TILES},
- "layer":[
-  {"mark":{"type":"rect", "cornerRadius":8}, "encoding":{"x":TX, "y":TY,
-    "color":{"field":"loans", "type":"quantitative", "title":"Loans per person", "scale":{"domain":[3,8], "range":[C.pale, C.dark]}, "legend":{"orient":"bottom"}},
-    "stroke":{"condition":{"test":"datum.code == 'QLD'", "value":"#102f32"}, "value":"transparent"}, "strokeWidth":{"condition":{"test":"datum.code == 'QLD'", "value":4}, "value":0}, "tooltip":TT}},
-  {"mark":{"type":"text", "fontSize":20, "fontWeight":"bold", "dy":-10, "font":"Newsreader, Georgia, serif"}, "encoding":{"x":TX, "y":TY, "text":{"field":"code"},
-    "color":{"condition":{"test":"datum.loans >= 6.4", "value":"#ffffff"}, "value":"#1c2b2e"}}},
-  {"mark":{"type":"text", "fontSize":15, "dy":14}, "encoding":{"x":TX, "y":TY, "text":{"field":"loans", "type":"quantitative", "format":".1f"},
-    "color":{"condition":{"test":"datum.loans >= 6.4", "value":"#ffffff"}, "value":"#1c2b2e"}}}]}, FIT));
-</script>
+    const fontsReady = document.fonts ? document.fonts.ready : Promise.resolve();
+    const show = (id, s) => fontsReady.then(() => vegaEmbed('#' + id, s, { actions: false, config: CONFIG, renderer: 'svg' })).catch(e => {
+      const el = document.getElementById(id);
+      el.className = 'chart err';
+      el.textContent = 'Error in ' + id + ': ' + e.message;
+    });
+
+    const PAD = { left: 16, right: 32, top: 14, bottom: 14 };
+    const FIT = { width: "container", autosize: { type: "fit-x", contains: "padding" }, padding: PAD };
+    const LIB = {
+      url: "data/library_stats.csv",
+      format: {
+        type: "csv",
+        parse: { usage_pc: "number", members_pct: "number", visits_pc: "number", irsd_score: "number", pop: "number" }
+      }
+    };
+    const P = { type: "conicEqualArea", parallels: [-12, -28], rotate: [-145, 0] };
+    const TOPO = { url: "data/qld_lga.topojson", format: { type: "topojson", feature: "qld_lga" } };
+
+    const STATS = (fields, parse) => ({
+      lookup: "properties.code",
+      from: {
+        data: {
+          url: "data/library_stats.csv",
+          format: { type: "csv", parse: Object.assign({ lga_code_2021: "string" }, parse || {}) }
+        },
+        key: "lga_code_2021",
+        fields: fields
+      }
+    });
+
+    const BASE = {
+      data: TOPO,
+      mark: { type: "geoshape", fill: "#e9ebe7", stroke: "#ffffff", strokeWidth: 0.4 },
+      encoding: { tooltip: [{ field: "properties.name", type: "nominal", title: "Council (no figures published)" }] }
+    };
+
+    const MEAS = {
+      domain: ["Items borrowed", "Library visits (in person)", "Website visits", "Items in collection"],
+      range: [C.dark, C.sky, C.violet, C.slate]
+    };
+
+    // Bivariate palette: first digit = borrowing (teal), second digit = advantage (slate-blue)
+    const cols = {
+      "00": "#e8e8e8", "10": "#ace4e4", "20": "#5ac8c8",
+      "01": "#dfb0d6", "11": "#a5add3", "21": "#5698b9",
+      "02": "#be64ac", "12": "#8c62aa", "22": "#3b4994"
+    };
+
+    document.getElementById('keygrid').innerHTML = ["02", "12", "22", "01", "11", "21", "00", "10", "20"]
+      .map(k => `<i style="background:${cols[k]}"></i>`).join('');
+
+    // Map 1: choropleth
+    show('vis', Object.assign({
+      $schema: S,
+      height: 460,
+      projection: P,
+      title: "Loans per resident, 2024-25",
+      layer: [
+        BASE,
+        {
+          data: TOPO,
+          transform: [STATS(["name", "usage_pc", "members_pct"]), { filter: "isValid(datum.usage_pc)" }],
+          mark: { type: "geoshape", stroke: "white" },
+          encoding: {
+            color: {
+              field: "usage_pc",
+              type: "quantitative",
+              title: "Loans per resident",
+              scale: { type: "threshold", domain: [2, 4, 6, 8], range: [C.pale, C.light, "#7fb3b2", C.mid, C.dark] },
+              legend: { orient: "bottom", direction: "horizontal" }
+            },
+            tooltip: [
+              { field: "name", title: "Council" },
+              { field: "usage_pc", type: "quantitative", title: "Loans per resident" },
+              { field: "members_pct", type: "quantitative", title: "Members % of population" }
+            ]
+          }
+        }
+      ]
+    }, FIT));
+
+    // Map 2: proportional symbols
+    show('vis2', Object.assign({
+      $schema: S,
+      height: 460,
+      projection: P,
+      title: "Physical library visits, 2024-25",
+      layer: [
+        Object.assign({}, BASE, { mark: { type: "geoshape", fill: C.grey, stroke: "white", strokeWidth: 0.5 } }),
+        {
+          data: TOPO,
+          transform: [
+            STATS(["name", "visits"]),
+            { filter: "isValid(datum.visits) && datum.visits > 0" },
+            { calculate: "geoCentroid(null, datum)", as: "centroid" }
+          ],
+          mark: { type: "circle", color: C.dark, opacity: 0.6, stroke: "#0d2b2d", strokeWidth: 0.5 },
+          encoding: {
+            longitude: { field: "centroid[0]", type: "quantitative" },
+            latitude: { field: "centroid[1]", type: "quantitative" },
+            size: {
+              field: "visits",
+              type: "quantitative",
+              title: "Total annual visits",
+              scale: { type: "sqrt", range: [10, 800] },
+              legend: { orient: "bottom", direction: "horizontal" }
+            },
+            tooltip: [
+              { field: "name", title: "Council" },
+              { field: "visits", type: "quantitative", title: "Visits", format: "," }
+            ]
+          }
+        }
+      ]
+    }, FIT));
+
+    // Map 3: bivariate
+    show('vis4', Object.assign({
+      $schema: S,
+      height: 560,
+      projection: P,
+      title: "Library use and disadvantage together",
+      layer: [
+        BASE,
+        {
+          data: TOPO,
+          transform: [STATS(["name", "usage_pc", "irsd_decile", "bi"], { bi: "string" }), { filter: "isValid(datum.bi)" }],
+          mark: { type: "geoshape", stroke: "white" },
+          encoding: {
+            color: {
+              field: "bi",
+              type: "nominal",
+              legend: null,
+              scale: { domain: Object.keys(cols), range: Object.values(cols) }
+            },
+            tooltip: [
+              { field: "name", title: "Council" },
+              { field: "usage_pc", type: "quantitative", title: "Loans per resident" },
+              { field: "irsd_decile", type: "quantitative", title: "Disadvantage decile (1 = most disadvantaged)" }
+            ]
+          }
+        }
+      ]
+    }, FIT));
+
+    // Lollipop
+    show('vis7', Object.assign({
+      $schema: S,
+      height: 460,
+      title: "Top 15 borrowing councils (larger councils)",
+      data: LIB,
+      transform: [
+        { filter: "isValid(datum.usage_pc) && datum.svc == 'IND'" },
+        { window: [{ op: "rank", as: "rank" }], sort: [{ field: "usage_pc", order: "descending" }] },
+        { filter: "datum.rank <= 15" }
+      ],
+      encoding: {
+        y: { field: "name", type: "nominal", sort: "-x", title: null },
+        x: { field: "usage_pc", type: "quantitative", title: "Items borrowed per resident" }
+      },
+      layer: [
+        { mark: { type: "rule", color: C.light, strokeWidth: 2 }, encoding: { x2: { datum: 0 } } },
+        {
+          mark: { type: "circle", size: 120, color: C.dark },
+          encoding: {
+            tooltip: [
+              { field: "name", title: "Council" },
+              { field: "usage_pc", title: "Loans per resident" }
+            ]
+          }
+        }
+      ]
+    }, FIT));
+
+    // Jitter
+    show('vis6', Object.assign({
+      $schema: S,
+      height: 300,
+      title: "Loans per resident, council by council",
+      data: LIB,
+      transform: [
+        { filter: "isValid(datum.usage_pc)" },
+        { calculate: "datum.svc == 'IND' ? 'Larger councils (independent)' : 'Smaller rural councils'", as: "group" },
+        { calculate: "random()", as: "jitter" }
+      ],
+      mark: { type: "circle", size: 70, opacity: 0.75 },
+      encoding: {
+        x: { field: "usage_pc", type: "quantitative", title: "Items borrowed per resident, 2024-25" },
+        y: { field: "group", type: "nominal", title: null },
+        yOffset: { field: "jitter", type: "quantitative" },
+        color: { field: "group", type: "nominal", legend: null, scale: { range: [C.dark, C.violet] } },
+        tooltip: [
+          { field: "name", title: "Council" },
+          { field: "usage_pc", title: "Loans per resident" }
+        ]
+      }
+    }, FIT));
+
+    // Butterfly (concat charts cannot use container width, so fixed widths sized to fit the page)
+    const ages = ["Early childhood", "Children", "Young adult", "Adults", "Seniors", "All ages"];
+    show('vis8', {
+      $schema: S,
+      padding: PAD,
+      title: "Who programs are for, and who turns up (Australia, 2023-24)",
+      data: { url: "data/program_age.csv" },
+      transform: [
+        { joinaggregate: [{ op: "sum", field: "sessions", as: "ts" }, { op: "sum", field: "participants", as: "tp" }] },
+        { calculate: "datum.sessions / datum.ts", as: "s_share" },
+        { calculate: "datum.participants / datum.tp", as: "p_share" }
+      ],
+      hconcat: [
+        {
+          width: 170,
+          height: 300,
+          mark: { type: "bar", color: C.violet },
+          encoding: {
+            y: { field: "age", type: "ordinal", sort: ages, axis: null },
+            tooltip: [
+              { field: "age", type: "nominal", title: "Audience" },
+              { field: "sessions", type: "quantitative", title: "Sessions", format: "," },
+              { field: "s_share", type: "quantitative", title: "Share of sessions", format: ".0%" },
+              { field: "participants", type: "quantitative", title: "Attendances", format: "," },
+              { field: "p_share", type: "quantitative", title: "Share of attendance", format: ".0%" }
+            ],
+            x: { field: "s_share", type: "quantitative", scale: { reverse: true, domain: [0, 0.55] }, axis: { format: "%" }, title: "Share of sessions" }
+          }
+        },
+        {
+          width: 170,
+          height: 300,
+          mark: { type: "bar", color: C.dark },
+          encoding: {
+            y: { field: "age", type: "ordinal", sort: ages, title: null, axis: { orient: "left", labelPadding: 8 } },
+            tooltip: [
+              { field: "age", type: "nominal", title: "Audience" },
+              { field: "sessions", type: "quantitative", title: "Sessions", format: "," },
+              { field: "s_share", type: "quantitative", title: "Share of sessions", format: ".0%" },
+              { field: "participants", type: "quantitative", title: "Attendances", format: "," },
+              { field: "p_share", type: "quantitative", title: "Share of attendance", format: ".0%" }
+            ],
+            x: { field: "p_share", type: "quantitative", scale: { domain: [0, 0.55] }, axis: { format: "%" }, title: "Share of people attending" }
+          }
+        }
+      ]
+    });
+
+    // Line chart
+    show('vis5', Object.assign({
+      $schema: S,
+      height: 460,
+      title: "Australia: five years of library use, per person",
+      data: { url: "data/national_per_person.csv" },
+      mark: { type: "line", point: true, strokeWidth: 2.5 },
+      encoding: {
+        x: { field: "year", type: "ordinal", title: null, axis: { labelAngle: 0 } },
+        y: { field: "per_person", type: "quantitative", title: "Per person, per year" },
+        color: { field: "measure", type: "nominal", title: null, scale: MEAS, legend: { orient: "bottom" } },
+        tooltip: [
+          { field: "measure", type: "nominal", title: "Measure" },
+          { field: "year", type: "ordinal", title: "Year" },
+          { field: "per_person", type: "quantitative", title: "Per person" }
+        ]
+      }
+    }, FIT));
+
+    // Change since before COVID (diverging lollipop)
+    show('vis3', Object.assign({
+      $schema: S,
+      height: 300,
+      title: "Change per person since 2019-20",
+      data: { url: "data/national_per_person.csv" },
+      transform: [
+        { filter: "datum.year == '2019-20' || datum.year == '2023-24'" },
+        { pivot: "year", value: "per_person", groupby: ["measure"] },
+        { calculate: "(datum['2023-24'] - datum['2019-20']) / datum['2019-20']", as: "change" }
+      ],
+      encoding: {
+        y: { field: "measure", type: "nominal", sort: "-x", title: null, axis: { labelLimit: 170 } },
+        x: { field: "change", type: "quantitative", title: "Change from 2019-20 to 2023-24", axis: { format: "+%" } }
+      },
+      layer: [
+        { mark: { type: "rule", strokeWidth: 2, color: "#b7d6d4" }, encoding: { x2: { datum: 0 } } },
+        {
+          mark: { type: "circle", size: 160 },
+          encoding: {
+            color: { condition: { test: "datum.change >= 0", value: C.dark }, value: C.violet },
+            tooltip: [{ field: "measure" }, { field: "change", type: "quantitative", format: "+.0%", title: "Change" }]
+          }
+        },
+        {
+          mark: { type: "text", dy: -14, fontSize: 12 },
+          encoding: { text: { field: "change", type: "quantitative", format: "+.0%" } }
+        }
+      ]
+    }, FIT));
+
+    // Parallel coordinates: the 10 highest-borrowing councils in teal, all others pale grey
+    const AX = ["Members % of residents", "Visits per resident", "Loans per resident", "Advantage (SEIFA score)"];
+    const PCX = { field: "axis", type: "ordinal", sort: AX, title: null, axis: { grid: true, gridColor: "#9aa5a0", labelAngle: 0, labelLimit: 180, labelFontSize: 12, labelPadding: 8, orient: "top" } };
+    const PCY = { field: "rank", type: "quantitative", title: "Rank among councils (low to high)", axis: { format: "%" } };
+    const PCC = { field: "group", type: "nominal", title: null, scale: { domain: ["Top 10 borrowers", "Other councils"], range: [C.dark, "#b3bbb7"] }, legend: { orient: "bottom" } };
+    const PCT = [{ field: "name", title: "Council" }, { field: "group", title: "Group" }];
+
+    show('vis9', Object.assign({
+      $schema: S,
+      height: 520,
+      title: "Each line is one council (the top 10 borrowers are highlighted)",
+      data: LIB,
+      transform: [
+        { filter: "isValid(datum.usage_pc) && isValid(datum.members_pct) && isValid(datum.visits_pc)" },
+        { window: [{ op: "rank", as: "loanrank" }], sort: [{ field: "usage_pc", order: "descending" }] },
+        { calculate: "datum.loanrank <= 10 ? 'Top 10 borrowers' : 'Other councils'", as: "group" },
+        { fold: ["members_pct", "visits_pc", "usage_pc", "irsd_score"], as: ["key", "value"] },
+        { window: [{ op: "percent_rank", as: "rank" }], groupby: ["key"], sort: [{ field: "value" }] },
+        { calculate: "datum.key=='members_pct' ? 'Members % of residents' : datum.key=='visits_pc' ? 'Visits per resident' : datum.key=='usage_pc' ? 'Loans per resident' : 'Advantage (SEIFA score)'", as: "axis" }
+      ],
+      layer: [
+        {
+          transform: [{ filter: "datum.group == 'Other councils'" }],
+          mark: { type: "line", point: { filled: true, size: 16 }, opacity: 0.45, strokeWidth: 0.9 },
+          encoding: { x: PCX, y: PCY, detail: { field: "name" }, color: PCC, tooltip: PCT }
+        },
+        {
+          transform: [{ filter: "datum.group == 'Top 10 borrowers'" }],
+          params: [{ name: "hov", select: { type: "point", on: "mouseover", fields: ["name"], clear: "mouseout" } }],
+          mark: { type: "line", point: { filled: true, size: 50 } },
+          encoding: {
+            x: PCX,
+            y: PCY,
+            detail: { field: "name" },
+            color: PCC,
+            tooltip: PCT,
+            opacity: { condition: [{ param: "hov", empty: false, value: 1 }, { test: "length(data('hov_store')) > 0", value: 0.25 }], value: 0.9 },
+            strokeWidth: { condition: { param: "hov", empty: false, value: 4 }, value: 2.4 }
+          }
+        }
+      ]
+    }, FIT));
+
+    // Heatmap: share of each council's program sessions by audience
+    show('vis10', Object.assign({
+      $schema: S,
+      title: "Who each council's programs are for",
+      data: { url: "data/programs_age.csv" },
+      height: { step: 13 },
+      mark: "rect",
+      encoding: {
+        x: { field: "group", type: "ordinal", title: null, sort: ["Ages 0-5", "Ages 6-12", "Ages 13-17", "Adults and all ages"], axis: { labelAngle: 0, labelLimit: 80, orient: "top" } },
+        y: { field: "name", type: "nominal", title: null, sort: { field: "total", op: "max", order: "descending" }, axis: { labelFontSize: 10 } },
+        color: { field: "share", type: "quantitative", title: "Share of sessions", scale: { range: [C.pale, C.dark] }, legend: { orient: "bottom", format: "%" } },
+        tooltip: [
+          { field: "name", title: "Council" },
+          { field: "total", title: "Sessions in 2024-25", format: "," },
+          { field: "group", title: "Audience" },
+          { field: "share", title: "Share", format: ".0%" }
+        ]
+      }
+    }, FIT));
+
+    // Dumbbell: who pays, per resident
+    show('vis11', Object.assign({
+      $schema: S,
+      title: "Funding per resident, independent councils (2024-25)",
+      data: { url: "data/funding.csv" },
+      height: { step: 18 },
+      transform: [
+        { fold: ["local_pc", "state_pc"], as: ["source", "value"] },
+        { calculate: "datum.source == 'local_pc' ? 'Local council' : 'State Library of Queensland'", as: "payer" }
+      ],
+      encoding: {
+        y: { field: "name", type: "nominal", title: null, sort: { field: "local_pc", op: "max", order: "descending" } },
+        x: { field: "value", type: "quantitative", title: "Dollars per resident", axis: { format: "$.0f" } }
+      },
+      layer: [
+        { mark: { type: "line", color: "#b7d6d4", strokeWidth: 3 }, encoding: { detail: { field: "name" } } },
+        {
+          mark: { type: "circle", size: 110, opacity: 1 },
+          encoding: {
+            color: { field: "payer", type: "nominal", title: null, scale: { domain: ["Local council", "State Library of Queensland"], range: [C.dark, C.violet] }, legend: { orient: "top" } },
+            tooltip: [
+              { field: "name", title: "Council" },
+              { field: "payer", title: "Source" },
+              { field: "value", title: "Per resident", format: "$.2f" }
+            ]
+          }
+        }
+      ]
+    }, FIT));
+
+    // Australia: tile-grid map of loans per person by state and territory
+    const TILES = [
+      { code: "NT", name: "Northern Territory", col: 1, row: 0, loans: 3.7 },
+      { code: "QLD", name: "Queensland", col: 2, row: 0, loans: 7.8 },
+      { code: "WA", name: "Western Australia", col: 0, row: 1, loans: 5.5 },
+      { code: "SA", name: "South Australia", col: 1, row: 1, loans: 7.1 },
+      { code: "NSW", name: "New South Wales", col: 2, row: 1, loans: 6.0 },
+      { code: "ACT", name: "Australian Capital Territory", col: 3, row: 1, loans: 5.5 },
+      { code: "VIC", name: "Victoria", col: 2, row: 2, loans: 6.6 },
+      { code: "TAS", name: "Tasmania", col: 2, row: 3, loans: 5.8 }
+    ];
+
+    const TX = { field: "col", type: "ordinal", axis: null, scale: { paddingInner: 0.06, paddingOuter: 0.1 } };
+    const TY = { field: "row", type: "ordinal", axis: null, scale: { paddingInner: 0.06, paddingOuter: 0.1 } };
+    const TT = [
+      { field: "name", type: "nominal", title: "State or territory" },
+      { field: "loans", type: "quantitative", title: "Loans per person", format: ".1f" }
+    ];
+
+    show('vis0', Object.assign({
+      $schema: S,
+      height: 420,
+      title: "Loans per person by state and territory, 2023-24",
+      data: { values: TILES },
+      layer: [
+        {
+          mark: { type: "rect", cornerRadius: 8 },
+          encoding: {
+            x: TX,
+            y: TY,
+            color: {
+              field: "loans",
+              type: "quantitative",
+              title: "Loans per person",
+              scale: { domain: [3, 8], range: [C.pale, C.dark] },
+              legend: { orient: "bottom" }
+            },
+            stroke: { condition: { test: "datum.code == 'QLD'", value: "#102f32" }, value: "transparent" },
+            strokeWidth: { condition: { test: "datum.code == 'QLD'", value: 4 }, value: 0 },
+            tooltip: TT
+          }
+        },
+        {
+          mark: { type: "text", fontSize: 20, fontWeight: "bold", dy: -10, font: "Newsreader, Georgia, serif" },
+          encoding: {
+            x: TX,
+            y: TY,
+            text: { field: "code" },
+            color: { condition: { test: "datum.loans >= 6.4", value: "#ffffff" }, value: "#1c2b2e" }
+          }
+        },
+        {
+          mark: { type: "text", fontSize: 15, dy: 14 },
+          encoding: {
+            x: TX,
+            y: TY,
+            text: { field: "loans", type: "quantitative", format: ".1f" },
+            color: { condition: { test: "datum.loans >= 6.4", value: "#ffffff" }, value: "#1c2b2e" }
+          }
+        }
+      ]
+    }, FIT));
+  </script>
 </body>
 </html>
